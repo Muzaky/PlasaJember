@@ -33,10 +33,13 @@
     .inputbox span {
         position: absolute;
         left: 0;
-        padding: 8px;
+        padding-right: 4px;
+        padding-bottom: 0px;
+        padding-top: 8px;
         padding-left: 12px;
         transition: 0.5s;
         color: #F8E8E0;
+        pointer-events: none;
     }
 
     .inputbox input:valid~span,
@@ -80,19 +83,19 @@
             <h2 class="text-[32px] w-[400px] text-wrap font-bold text-[#F8E8E0]">MASUK</h2>
             <p class="mt-[12px] text-[#F8E8E0] w-[400px] text-wrap">Terima rekomendasi dan penawaran menarik hanya untuk Anda</p>
             <div class="flex justify-center pt-[80px]">
-                <form action="" class="flex flex-col mt-[24px] gap-8">
+                <form action="<?= urlpath('login') ?>" class="flex flex-col mt-[24px] gap-8" id="login-form" method="post">
                     <div class="inputbox">
-                        <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required">
+                        <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="email">
                         <span>Masukkan Email</span>
                     </div>
                     <div class="inputbox">
-                        <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required">
+                        <input type="password" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="password">
                         <span>Kata Sandi</span>
                     </div>
                 </form>
             </div>
             <div class="flex justify-center mt-[80px]">
-                <button class="px-8 py-2 border-2 rounded-[12px] bg-[#F8E8E0] border-[#F8E8E0] hover:text-[#F8E8E0] hover:bg-[#CB6062]">Login</button>
+                <button class="px-8 py-2 border-2 rounded-[12px] bg-[#F8E8E0] border-[#F8E8E0] hover:text-[#F8E8E0] hover:bg-[#CB6062]" form="login-form">Login</button>
             </div>
             <div class="flex flex-row justify-center mt-4 text-[#F8E8E0]">
                 <p>Belum punya akun ?</p>

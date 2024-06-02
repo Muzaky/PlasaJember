@@ -31,10 +31,6 @@
     <div id="logo-container" class="flex pl-8">
         <img src="src/assets/Logo.png" alt="test" class="w-[112px]">
     </div>
-    <nav id="nav-footer" class="flex flex-row pl-24 gap-8 font-medium">
-        <a href="#" class="">Cari lowongan</a>
-        <a href="#" class="">List perusahaan</a>
-    </nav>
     <div id="auth-check" class="flex justify-end flex-1 px-8 font-semibold">
         <a href="<?= urlpath('login') ?>" class="px-4 py-[6px] border-2 rounded-[12px] border-[#CB6062] hover:text-[#F8E8E0] hover:bg-[#363A8D]">Masuk</a>
         <a href="<?= urlpath('register') ?>" class="px-4 py-[6px] border-2 rounded-[12px] border-[#CB6062] hover:text-[#F8E8E0] hover:bg-[#363A8D]">Daftar</a>
@@ -79,7 +75,7 @@
 
     </div>
     <div class="flex items-center justify-center mt-4 text-[#F8E8E0]">
-        <p>Copyright © 2024 - All right reserved by Bibitani Ltd</p>
+        <p>Copyright © 2024 - All right reserved by PLASA Ltd</p>
     </div>
 
 

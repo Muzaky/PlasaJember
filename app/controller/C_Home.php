@@ -4,7 +4,7 @@
 
 class C_Home
 {
-    static function index(){
-        
+    static function homepage(){
+        view('homepage/layout', ['url' => 'homepage']);
     }
-}
+}   
