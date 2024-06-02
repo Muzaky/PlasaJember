@@ -52,3 +52,16 @@ function urlpath($path)
     require_once 'config/static.php';
     return BASEURL . $path;
 }
+
+function compressToWebP( $source, $destination, $quality = 20 ) {
+    $info = getimagesize( $source );
+    if ( $info[ 'mime' ] == 'image/jpeg' ) {
+        $image = imagecreatefromjpeg( $source );
+    } elseif ( $info[ 'mime' ] == 'image/png' ) {
+        $image = imagecreatefrompng( $source );
+    } else {
+        return false;
+    }
+    imagepalettetotruecolor( $image );
+    return imagewebp( $image, $destination, $quality );
+}

@@ -14,6 +14,9 @@ Router::url('register', 'get', 'C_Auth::register');
 Router::url('homepage', 'get', 'C_Home::homepage');
 Router::url('register/pekerja', 'get', 'C_Auth::registerpekerja');
 Router::url('register/perekrut', 'get', 'C_Auth::registerperekrut');
+Router::url('list-perekrut', 'get', 'C_Home::listperekrut');
+router::url('lowongan_cari', 'get', 'C_Home::testingview'); 
+Router::url('logout','get','C_Auth::logout');
 
 
 
@@ -21,3 +24,4 @@ Router::url('register/perekrut', 'get', 'C_Auth::registerperekrut');
 # POST
 Router::url('register', 'post', 'C_Auth::saveRegister');
 Router::url('login', 'post', 'C_Auth::saveLogin');
+Router::url('homepage/createpekerjaan', 'post', 'C_Home::createpekerjaan');

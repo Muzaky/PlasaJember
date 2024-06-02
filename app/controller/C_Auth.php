@@ -3,6 +3,7 @@
 include_once 'app/models/M_Credentials.php';
 include_once 'app/models/M_Kecamatan.php';
 include_once 'app/models/M_Users.php';
+include_once 'app/models/M_Perekrut.php';
 
 
 class C_Auth
@@ -34,7 +35,6 @@ class C_Auth
     static function saveRegister()
     {
         $post = array_map('htmlspecialchars', $_POST);
-        echo "test";
         $credentials = M_Credentials::register([
             'email' => $post['email'],
             'password' => $post['password'],
@@ -54,11 +54,12 @@ class C_Auth
             ]);
         } elseif ($post['roles_id'] === '3') {
             $data = M_Perekrut::register([
-                'users_id' => $credentials,
+                'id_credentials' => $credentials,
                 'nama' => $post['nama'],
                 'phone' => $post['phone'],
                 'email' => $post['email'],
                 'alamat' => $post['alamat'],
+                'kecamatan' => $post['kecamatan'],
             ]);
         }
     }  
@@ -71,17 +72,38 @@ class C_Auth
             'password' => $post['password']
         ]);
 
-        // echo '<script>console.log(' . json_encode($user) . ')</script>';
+        
 
         if ($users) {
             unset($users['password']);
             $_SESSION['user'] = $users;
 
-            // echo '<script>console.log(' . json_encode($_SESSION['user']) . ')</script>';
+
 
             header('Location: ' . BASEURL . 'homepage');
         } else {
             header('Location: ' . BASEURL . 'login?failed=true');
         }
+    }
+
+    static function logout()
+    {
+        $_SESSION = array();
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        session_destroy();
+        header('Location: ' . BASEURL);
     }
 }

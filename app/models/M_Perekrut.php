@@ -2,6 +2,7 @@
 
 include_once 'config/connection.php';
 
+
 class M_Perekrut{
 
     static function login($data = [])
@@ -27,22 +28,45 @@ class M_Perekrut{
     static function register($data = []){
 
         global $conn;
+        $credentials = $data['id_credentials'];
+        $nama = $data['nama'];
+        $phone = $data['phone'];
         $email = $data['email'];
-        $password = $data['password'];
-
+        $alamat = $data['alamat'];
+        $kecamatan = $data['kecamatan'];
+        $validasi = 'process';
 
         # Insert to credentials table
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql_cred = "INSERT INTO credentials SET email = ?, password = ?";
-        $stmt_cred = $conn->prepare($sql_cred);
-        $stmt_cred->bind_param('ss', $email, $hashedPassword);
-        $stmt_cred->execute();
+        $stmt = $conn->prepare("INSERT INTO perekrut SET id_credentials = ?, nama = ?, phone = ?, email = ?, alamat = ?, kecamatan = ?, validasi = ? ");
+        $stmt->bind_param('issssis', $credentials, $nama, $phone, $email, $alamat, $kecamatan, $validasi);
+        $stmt->execute();
+        $users_id = $stmt->insert_id;
 
-        $result_cred = $stmt_cred->affected_rows > 0 ? true : false;
+        return $users_id;
+    }
 
+    static function getAllPerekrut(){
+        {
+            global $conn;
+            $sql = 'SELECT * FROM perekrut';
+            $stmt = $conn->prepare( $sql );
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all( MYSQLI_ASSOC );
+            $conn->close();
+        }
+    }
 
-
-        echo '<script>console.log("' . $result_cred . '")</script>';
-        return $result_cred;
+    static function getPerekrutbyid($id){
+        {
+            global $conn;
+            $sql = 'SELECT * FROM perekrut WHERE id_credentials = ?';
+            $stmt = $conn->prepare( $sql );
+            $stmt->bind_param( 'i', $id );
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+            
+        }
     }
 }

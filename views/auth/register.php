@@ -183,21 +183,22 @@
                 <h2 class="text-[32px] w-[400px] text-wrap font-bold text-[#F8E8E0]">DAFTAR</h2>
                 <p class="mt-[12px] text-[#F8E8E0] w-[400px] text-wrap">Terima rekomendasi dan penawaran menarik hanya untuk Anda</p>
                 <div class="flex justify-center pt-[40px]">
-                    <form action="" class="flex flex-col  gap-8">
+                    <form action="<?= urlpath('register') ?>" method="POST" id="register-form" class="flex flex-col  gap-8">
+                    <input type="hidden" name="roles_id" value="3">
                         <div class="inputbox">
                             <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="nama">
                             <span>Masukkan Nama</span>
                         </div>
                         <div class="inputbox">
-                            <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="email">
+                            <input type="email" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="email">
                             <span>Masukkan Email</span>
                         </div>
                         <div class="inputbox">
-                            <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="password">
+                            <input type="password" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="password">
                             <span>Kata Sandi</span>
                         </div>
                         <div class="inputbox">
-                            <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="phone">
+                            <input type="number" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="phone">
                             <span>No. Handphone</span>
                         </div>
                         <div class="inputbox">
@@ -213,7 +214,7 @@
                     </form>
                 </div>
                 <div class="flex justify-center mt-[40px]">
-                    <button class="px-8 py-2 border-2 rounded-[12px] bg-[#F8E8E0] border-[#F8E8E0] hover:text-[#F8E8E0] hover:bg-[#CB6062]">Daftar</button>
+                    <button class="px-8 py-2 border-2 rounded-[12px] bg-[#F8E8E0] border-[#F8E8E0] hover:text-[#F8E8E0] hover:bg-[#CB6062]" type="submit" form="register-form">Daftar</button>
                 </div>
                 <div class="flex flex-row justify-center mt-4 text-[#F8E8E0]">
                     <p>Sudah punya akun ?</p>
