@@ -10,7 +10,21 @@ class C_Home
             header('Location: ' . BASEURL . 'login?auth=false');
             exit;
         } else {
-            view('homepage/homepage_layout', ['url' => 'homepage', 'user' => $_SESSION['user'],'perekrut' => M_Perekrut::getAllPerekrut($_SESSION['user']['id'])]);
+            if ($_SESSION['user']['roles_id'] == 3){
+                $perekrut = M_Perekrut::getPerekrutbyid($_SESSION['user']['id']);
+                $_SESSION['perekrut'] = $perekrut;
+               
+                $pekerjaan = M_Pekerjaan::getPekerjaanByid($perekrut['id']);
+                $_SESSION['pekerjaan'] = $pekerjaan;
+                
+               
+            }
+            view('homepage/homepage_layout', [
+                'url' => 'homepage', 
+                'user' => $_SESSION['user'], 
+                'perekrut'=> $perekrut,
+                'listperekrut' => M_Perekrut::getAllPerekrut(),
+                'pekerjaan'=> $pekerjaan]);
         }
     }
 
@@ -47,4 +61,27 @@ class C_Home
             }
         }
     }
+
+    static function updatepekerjaan(){
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login?auth=false');
+            exit;
+        }else{
+
+            $data = [
+                'id' => $_POST['id'],
+                'nama_pekerjaan' => $_POST['nama_pekerjaan'],
+                'deskripsi' => $_POST['deskripsi'],
+                'alamat' => $_POST['alamat'],
+                'status' => $_POST['status']
+            ];
+            if ( M_Pekerjaan::updatePekerjaan( $data ) ) {
+                header('Location: ' . BASEURL . 'homepage');
+            } else {
+                echo json_encode( [ 'success' => false, 'message' => 'Gagal menyimpan data' ] );
+            }
+        }
+    }
+
+    
 }       

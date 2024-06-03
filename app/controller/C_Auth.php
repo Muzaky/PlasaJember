@@ -77,9 +77,7 @@ class C_Auth
         if ($users) {
             unset($users['password']);
             $_SESSION['user'] = $users;
-
-
-
+            
             header('Location: ' . BASEURL . 'homepage');
         } else {
             header('Location: ' . BASEURL . 'login?failed=true');

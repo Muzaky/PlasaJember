@@ -22,7 +22,15 @@
     .footer-sublink:hover{
         
         color: #F8E8E0;
-        border-bottom: 2px solid #F8E8E0;
+       
+    }
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #CB6062;
+        border-radius: 10px;
     }
 
 </style>
@@ -37,19 +45,30 @@
     </div>
 </header>
 
-<section id="main-content" class="h-screen">
-
+<section id="main-content" class="flex flex-col font-[montserrat]">
+    <div class="flex flex-row justify-center items-center bg-[#F8E8E0] p-[38px]">
+        <div class="">
+            <div class="flex flex-col">
+                <h1 class="text-[32px] font-bold ">Selamat Datang di</h1>
+                <h1 class="text-[48px] font-bold text-[#CB6062]">PLASA JEMBER</h1>
+                <p>Lakukan segala pekerjaan yang kamu bisa, kapanpun itu !</p>
+            </div>
+            <button type="button" onclick="window.location.href='<?= urlpath('register') ?>'" class="p-4 bg-[#CB6062] mt-4 rounded-[4px] text-[#F8E8E0]">Daftar Sekarang !</button>
+        </div>
+        <div class="spacer w-[300px]"></div>
+        <img src="src/assets/Question.png" alt="" class="h-[500px]">
+    </div>
 </section>
 
 <footer class="flex flex-col p-6 text-center bg-[#CB6062]" id="footer">
-    <div class="flex flex-row justify-between">
-        <div class="spacer"></div>
+    <div class="flex flex-row justify-center">
+        
         <div class="flex flex-col items-start ml-8 footer-bar">
             <img src="src/assets/Logo.png" class="h-20" alt="">
             <p class="w-80 text-wrap text-start text-[#F8E8E0] mt-4">Platform penyedia lowongan pekerjaan bagi warga Kabupaten Jember</p>
         </div>
-        <div class="spacer"></div>
-        <div class="items-end">
+        <div class="spacer w-[500px]"></div>
+        <div class="items-end w-80 ">
             <div class="flex flex-row gap-8">
                 <div class="footer-bar">
                     <div class="footer-subtitle font-[Montserrat] text-[24px] font-semibold">

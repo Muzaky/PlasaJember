@@ -25,3 +25,4 @@ Router::url('logout','get','C_Auth::logout');
 Router::url('register', 'post', 'C_Auth::saveRegister');
 Router::url('login', 'post', 'C_Auth::saveLogin');
 Router::url('homepage/createpekerjaan', 'post', 'C_Home::createpekerjaan');
+Router::url('homepage/updatepekerjaan', 'post', 'C_Home::updatepekerjaan');
