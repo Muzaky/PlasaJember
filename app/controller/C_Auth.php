@@ -52,6 +52,10 @@ class C_Auth
                 'alamat' => $post['alamat'],
                 'kecamatan' => $post['kecamatan'],
             ]);
+
+            if ($data) {
+                header('Location: ' . BASEURL . 'login');
+            }
         } elseif ($post['roles_id'] === '3') {
             $data = M_Perekrut::register([
                 'id_credentials' => $credentials,
@@ -61,6 +65,10 @@ class C_Auth
                 'alamat' => $post['alamat'],
                 'kecamatan' => $post['kecamatan'],
             ]);
+            
+            if ($data) {
+                header('Location: ' . BASEURL . 'login');
+            }
         }
     }  
 
@@ -83,6 +91,8 @@ class C_Auth
             header('Location: ' . BASEURL . 'login?failed=true');
         }
     }
+
+    
 
     static function logout()
     {

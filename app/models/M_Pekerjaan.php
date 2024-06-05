@@ -81,4 +81,34 @@ class M_Pekerjaan
             return $data;
         }
     }
+
+    static function getallPekerjaan()
+    {
+        global $conn;
+        $sql = 'SELECT * FROM pekerjaan';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();  
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        if ($data === null) {
+            return [];
+        }
+        return $data;
+    }
+
+    static function getPekerjaanByidpekerjaan($id)
+    { 
+            global $conn;
+            $sql = 'SELECT * FROM pekerjaan WHERE id = ?';
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data = $result->fetch_assoc();
+            if ($data === null) {
+                return [];
+            }
+            return $data;
+        
+    }
 }
