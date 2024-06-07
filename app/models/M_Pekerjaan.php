@@ -8,15 +8,22 @@ class M_Pekerjaan
 {
     static function savePekerjaan($data = [])
     {
+        
         global $conn;
         $id_perekrut = $data['id_perekrut'];
         $nama_pekerjaan = $data['nama_pekerjaan'];
         $deskripsi = $data['deskripsi'];
         $alamat = $data['alamat'];
         $status = $data['status'];
+        $tugas = $data['tugas'];
+        $waktu_kerja = $data['waktu_kerja'];
+        $kompensasi = $data['kompensasi'];
+        $batas = $data['batas'];
+        $email = $data['email'];
+        $telp = $data['telp'];
 
-        $stmt = $conn->prepare('INSERT INTO pekerjaan (id_perekrut, nama_pekerjaan, deskripsi, alamat, status) VALUES (?, ?, ?, ?, ?)');
-        $stmt->bind_param('issss', $id_perekrut, $nama_pekerjaan, $deskripsi, $alamat, $status);
+        $stmt = $conn->prepare('INSERT INTO pekerjaan (id_perekrut, nama_pekerjaan, deskripsi, alamat, tugas, waktu_kerja, kompensasi, batas, email, telp, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('issssssssss', $id_perekrut, $nama_pekerjaan, $deskripsi, $alamat, $tugas, $waktu_kerja, $kompensasi, $batas, $email, $telp, $status);
         $stmt->execute();
         $id = $stmt->insert_id;
 
@@ -51,16 +58,22 @@ class M_Pekerjaan
         $deskripsi = $data['deskripsi'];
         $alamat = $data['alamat'];
         $status = $data['status'];
+        $tugas = $data['tugas'];
+        $waktu_kerja = $data['waktu_kerja'];
+        $kompensasi = $data['kompensasi'];
+        $batas = $data['batas'];
+        $email = $data['email'];
+        $telp = $data['telp'];
         $foto = isset($data['foto']) ? $data['foto'] : null;
 
         if ($foto !== null) {
             // If foto is provided, include it in the update query
-            $stmt = $conn->prepare('UPDATE pekerjaan SET nama_pekerjaan = ?, deskripsi = ?, alamat = ?, status = ?, foto = ? WHERE id = ?');
-            $stmt->bind_param('sssssi', $nama_pekerjaan, $deskripsi, $alamat, $status, $foto, $id);
+            $stmt = $conn->prepare('UPDATE pekerjaan SET nama_pekerjaan = ?, deskripsi = ?, alamat = ?, status = ?, foto = ?, tugas = ? waktu_kerja = ?, kompensasi = ?, batas = ?, email = ?, telp = ? WHERE id = ?');
+            $stmt->bind_param('sssssissssss', $nama_pekerjaan, $deskripsi, $alamat, $status, $foto, $id, $tugas, $waktu_kerja, $kompensasi, $batas, $email, $telp);
         } else {
             // If foto is not provided, exclude it from the update query
-            $stmt = $conn->prepare('UPDATE pekerjaan SET nama_pekerjaan = ?, deskripsi = ?, alamat = ?, status = ? WHERE id = ?');
-            $stmt->bind_param('ssssi', $nama_pekerjaan, $deskripsi, $alamat, $status, $id);
+            $stmt = $conn->prepare('UPDATE pekerjaan SET nama_pekerjaan = ?, deskripsi = ?, alamat = ?, status = ?, tugas = ? waktu_kerja = ?, kompensasi = ?, batas = ?, email = ?, telp = ? WHERE id = ?');
+            $stmt->bind_param('ssssissssss', $nama_pekerjaan, $deskripsi, $alamat, $status, $id);
         }
         $stmt->execute();
         $result = $stmt->affected_rows > 0 ? true : false;

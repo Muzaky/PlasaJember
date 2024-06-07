@@ -61,6 +61,7 @@ class C_Home
 
     static function createpekerjaan()
     {
+        
         if (!isset($_SESSION['user'])) {
             header('Location: ' . BASEURL . 'login');
             exit;
@@ -72,7 +73,14 @@ class C_Home
                 'nama_pekerjaan' => $_POST['nama_pekerjaan'],
                 'deskripsi' => $_POST['deskripsi'],
                 'alamat' => $_POST['alamat'],
-                'status' => $_POST['status']
+                'status' => $_POST['status'],
+                'tugas' => $_POST['tugas'],
+                'waktu_kerja' => $_POST['waktu_kerja'],
+                'kompensasi' => $_POST['kompensasi'],
+                'batas' => $_POST['batas'],
+                'email' => $_POST['email'],
+                'telp' => $_POST['telp']
+
             ];
             if (M_Pekerjaan::savePekerjaan($data)) {
                 echo json_encode(['success' => true]);

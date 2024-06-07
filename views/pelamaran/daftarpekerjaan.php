@@ -28,7 +28,8 @@
     <nav class="flex flex-row pl-24 gap-8 font-medium nav-footer">
         <?php if ($user['roles_id'] == 2) {
             $list_perekrut = urlpath('homepage/list-perekrut'); // Correct path
-            echo '<a href="#" class="">Cari Lowongan</a>';
+            $homepage = urlpath('homepage');
+            echo '<a href="' . $homepage . '" class="">Cari Lowongan</a>';
             echo '<a href="' . $list_perekrut . '" class="">List Perekrut</a>';
         } ?>
 
@@ -55,7 +56,7 @@
                 <h3><?= $pekerjaandetails['nama_pekerjaan'] ?></h3>
                 <label for="">Deskripsi : </label>
                 <h3 class="text-center"><?= $pekerjaandetails['deskripsi'] ?></h3>
-                <label for="">Alamat : </label>
+                <label for="">Lokasi : </label>
                 <h3 class="text-center"><?= $pekerjaandetails['alamat'] ?></h3>
                 <button class="bg-[#CB6062] text-white font-semibold py-2 px-4 rounded hover:bg-[#F8E8E0]" onclick="">Lamar</button>
             </div>
