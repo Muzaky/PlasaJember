@@ -82,7 +82,7 @@ class M_Pekerjaan
         return $result;
     }
     static function getPekerjaanByid($id)
-    { {
+    { 
             global $conn;
             $sql = 'SELECT * FROM pekerjaan WHERE id_perekrut = ?';
             $stmt = $conn->prepare($sql);
@@ -94,7 +94,7 @@ class M_Pekerjaan
                 return [];
             }
             return $data;
-        }
+        
     }
 
     static function getallPekerjaan()

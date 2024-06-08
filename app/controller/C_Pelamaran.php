@@ -98,6 +98,7 @@ class C_Pelamaran
         } else {
             $pekerja = M_Users::getUsersbyId($_SESSION['user']['id']);
             $pelamaran = M_Pelamaran::getPelaramanbyId($pekerja['id']);
+            
             view('pelamaran/pelamaran_layout', [
                 'url' => 'historypelamaran',
                 'pelamaran' => $pelamaran,

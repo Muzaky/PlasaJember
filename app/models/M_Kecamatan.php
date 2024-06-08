@@ -19,5 +19,18 @@ class M_Kecamatan
         return $kecamatan;
         $conn->close();
     }
+
+    static function getKecamatanById($id){
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM kecamatan WHERE id = ?");
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        if ($data === null) {
+            return [];
+        }
+        return $data;
+    }
 }
 ?>

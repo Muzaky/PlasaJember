@@ -81,18 +81,25 @@ class M_Pelamaran
     }
 
     static function getPelaramanbyId($id)
-    { 
-            global $conn;
-            $sql = 'SELECT * FROM pelamaran WHERE id_users = ?';
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-            if ($data === null) {
-                return [];
-            }
-            return $data;
-        
+    {
+        global $conn;
+        $sql = 'SELECT pelamaran.id AS id_pelamaran, pelamaran.*, pekerjaan.*
+        FROM pelamaran
+        INNER JOIN pekerjaan ON pelamaran.id_pekerjaan = pekerjaan.id
+        WHERE pelamaran.id_users = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        if ($data === null) {
+            return [];
+        }
+        return $data;
+    }
+
+    static function getpelamaranjoinbyid($id)
+    {
+        global $conn;
     }
 }

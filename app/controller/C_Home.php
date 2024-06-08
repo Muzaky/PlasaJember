@@ -17,7 +17,7 @@ class C_Home
                 $_SESSION['perekrut'] = $perekrut;
                 $pekerjaan = M_Pekerjaan::getPekerjaanByid($perekrut['id']);
                 $_SESSION['pekerjaan'] = $pekerjaan;
-          
+
                 view('homepage/homepage_layout', [
                     'url' => 'homepage',
                     'user' => $_SESSION['user'],
@@ -34,7 +34,7 @@ class C_Home
                 $_SESSION['pekerjaan'] = $pekerjaan;
                 $perekrut = M_Perekrut::getAllPerekrut();
                 $_SESSION['perekrut'] = $perekrut;
-              
+
 
 
                 view('homepage/homepage_layout', [
@@ -50,15 +50,31 @@ class C_Home
 
     static function listperekrut()
     {
-        view('homepage/homepage_layout', ['url' => 'list-perekrut', 'user' => $_SESSION['user'], 'perekrut' => M_Perekrut::getAllPerekrut()]);
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login?auth=false');
+            exit;
+        } else {
+            $perekrut_list = M_Perekrut::getAllPerekrut();
+            $alldata = [];
+            foreach ($perekrut_list as $perekrut) {
+                $pekerjaan_list = M_Pekerjaan::getPekerjaanByid($perekrut['id']);
+                $kecamatan = M_Kecamatan::getKecamatanById($perekrut['kecamatan']);
+                $pekerjaancount = count($pekerjaan_list);
+                $alldata[] = [
+                    'perekrut' => $perekrut,
+                    'kecamatan' => $kecamatan,
+                    'pekerjaan' => $pekerjaan_list,
+                    'countpekerjaan' => $pekerjaancount
+                ];
+            }
+            $_SESSION['perekrut'] = $alldata;
+           
+            view('homepage/homepage_layout', ['url' => 'list-perekrut', 'user' => $_SESSION['user'], 'perekrut' => $_SESSION['perekrut']]);
+        }
     }
 
     static function testingview()
     {
         view('testing/lowongan_cari');
     }
-
-
-    
-    
 }
