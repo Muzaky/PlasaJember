@@ -1,15 +1,16 @@
 <style>
-    #nav-footer{
+    #nav-footer {
         font-size: 20px;
         font-family: 'Montserrat';
         color: #2A2C35;
     }
-    #nav-footer a:hover{
+
+    #nav-footer a:hover {
         color: #F8E8E0;
         border-bottom: 2px solid #F8E8E0;
     }
 
-    #auth-check{
+    #auth-check {
         font-size: 20px;
         font-family: 'Montserrat';
         color: #363A8D;
@@ -19,11 +20,13 @@
         font-weight: 400;
         font-size: 20px;
     }
-    .footer-sublink:hover{
-        
+
+    .footer-sublink:hover {
+
         color: #F8E8E0;
-       
+
     }
+
     ::-webkit-scrollbar {
         width: 15px;
     }
@@ -33,6 +36,29 @@
         border-radius: 10px;
     }
 
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .animated-image {
+            height: 700px;
+            animation: fadeIn 1s ease-in;
+            transition: transform 0.5s ease-in-out;
+        }
+        .animated-image:hover {
+            transform: scale(1.05);
+        }
+    #main-content-left {
+        animation: fadeIn 1s ease-in;
+    }
 </style>
 
 <header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center">
@@ -46,23 +72,23 @@
 </header>
 
 <section id="main-content" class="flex flex-col font-[montserrat]">
-    <div class="flex flex-row justify-center items-center bg-[#F8E8E0] p-[38px]">
+    <div class="flex flex-row justify-center items-center bg-[#F8E8E0] p-[38px]" id="main-content-left">
         <div class="">
             <div class="flex flex-col">
                 <h1 class="text-[32px] font-bold ">Selamat Datang di</h1>
                 <h1 class="text-[48px] font-bold text-[#CB6062]">PLASA JEMBER</h1>
                 <p>Lakukan segala pekerjaan yang kamu bisa, kapanpun itu !</p>
             </div>
-            <button type="button" onclick="window.location.href='<?= urlpath('register') ?>'" class="p-4 bg-[#CB6062] mt-4 rounded-[4px] text-[#F8E8E0]">Daftar Sekarang !</button>
+            <button type="button" onclick="window.location.href='<?= urlpath('register') ?>'" class="p-4 bg-[#CB6062] mt-4 rounded-full text-[#F8E8E0]">Daftar Sekarang !</button>
         </div>
         <div class="spacer w-[300px]"></div>
-        <img src="src/assets/Question.png" alt="" class="h-[500px]">
+        <img src="src/assets/Question.png" alt="" class="animated-image">
     </div>
 </section>
 
 <footer class="flex flex-col p-6 text-center bg-[#CB6062]" id="footer">
     <div class="flex flex-row justify-center">
-        
+
         <div class="flex flex-col items-start ml-8 footer-bar">
             <img src="src/assets/Logo.png" class="h-20" alt="">
             <p class="w-80 text-wrap text-start text-[#F8E8E0] mt-4">Platform penyedia lowongan pekerjaan bagi warga Kabupaten Jember</p>
@@ -74,8 +100,6 @@
                     <div class="footer-subtitle font-[Montserrat] text-[24px] font-semibold">
                         <ul class="flex flex-col items-start gap-3"> Pages
                             <a href="#" class="footer-sublink">Home</a>
-                            <a href="#" class="footer-sublink">About</a>
-                            <a href="#" class="footer-sublink">Purpose</a>
                         </ul>
                     </div>
                 </div>

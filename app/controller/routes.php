@@ -26,6 +26,8 @@ Router::url('pelamaran/historypelamaran', 'get', 'C_Pelamaran::historypelamaran'
 # POST
 Router::url('register', 'post', 'C_Auth::saveRegister');
 Router::url('login', 'post', 'C_Auth::saveLogin');
-Router::url('homepage/createpekerjaan', 'post', 'C_Home::createpekerjaan');
-Router::url('homepage/updatepekerjaan', 'post', 'C_Home::updatepekerjaan');
+Router::url('homepage/createpekerjaan', 'post', 'C_Pekerjaan::createpekerjaan');
+Router::url('homepage/updatepekerjaan', 'post', 'C_Pekerjaan::updatepekerjaan');
 Router::url('pelamaran/createpelamaran', 'post', 'C_Pelamaran::createpelamaran');
+Router::url('pelamaran/updatepelamaran', 'post', 'C_Pelamaran::updatepelamaran');
+Router::url('pelamaran/deletepelamaran', 'post', 'C_Pelamaran::deletepelamaran');

@@ -17,13 +17,15 @@ class M_Pekerjaan
         $status = $data['status'];
         $tugas = $data['tugas'];
         $waktu_kerja = $data['waktu_kerja'];
+        $waktu_selesai = $data['waktu_selesai'];
         $kompensasi = $data['kompensasi'];
+        $per = $data['per'];
         $batas = $data['batas'];
         $email = $data['email'];
         $telp = $data['telp'];
 
-        $stmt = $conn->prepare('INSERT INTO pekerjaan (id_perekrut, nama_pekerjaan, deskripsi, alamat, tugas, waktu_kerja, kompensasi, batas, email, telp, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('issssssssss', $id_perekrut, $nama_pekerjaan, $deskripsi, $alamat, $tugas, $waktu_kerja, $kompensasi, $batas, $email, $telp, $status);
+        $stmt = $conn->prepare('INSERT INTO pekerjaan (id_perekrut, nama_pekerjaan, deskripsi, alamat, tugas, waktu_kerja, waktu_selesai , kompensasi, per , batas, email, telp, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('issssssisssss', $id_perekrut, $nama_pekerjaan, $deskripsi, $alamat, $tugas, $waktu_kerja, $waktu_selesai , $kompensasi, $per , $batas, $email, $telp, $status);
         $stmt->execute();
         $id = $stmt->insert_id;
 

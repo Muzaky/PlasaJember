@@ -44,8 +44,40 @@ class M_Pelamaran
             // Failed to upload the file
             return false;
         }
+    }
 
+    static function updatePelamaran($data = [])
+    {
+        global $conn;
+        $id = $data['id'];
+        $alasan = $data['alasan'];
+        $dokumen = isset($data['dokumen']) ? $data['dokumen'] : null;
 
+        if ($dokumen !== null) {
+            // If foto is provided, include it in the update query
+            $stmt = $conn->prepare('UPDATE pelamaran SET alasan = ?, dokumen = ? WHERE id = ?');
+            $stmt->bind_param('ssi', $alasan, $dokumen, $id);
+        } else {
+            // If foto is not provided, exclude it from the update query
+            $stmt = $conn->prepare('UPDATE pelamaran SET alasan = ? WHERE id = ?');
+            $stmt->bind_param('si', $alasan, $id);
+        }
+
+        $stmt->execute();
+        $result = $stmt->affected_rows > 0 ? true : false;
+        return $result;
+    }
+
+    static function deletepelamaran($data = [])
+    {
+        global $conn;
+        $id = $data['id'];
+        $sql = 'DELETE FROM pelamaran WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->affected_rows > 0 ? true : false;
+        return $result;
     }
 
     static function getPelaramanbyId($id)

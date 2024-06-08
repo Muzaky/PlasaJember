@@ -1,7 +1,8 @@
 <?php
 
-include_once 'app/models/M_Pelamaran.php';
+include_once 'app/models/M_Perekrut.php';
 include_once 'app/models/M_Pekerjaan.php';
+include_once 'app/models/M_Pelamaran.php';
 
 
 
@@ -46,6 +47,45 @@ class C_Pelamaran
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Gagal menyimpan data']);
+            }
+        }
+    }
+
+    static function updatepelamaran()
+    {
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login?auth=false');
+            exit;
+        } else {
+
+            $data = [
+                
+                'id' => $_POST['id'],
+                'alasan' => $_POST['alasan'],
+            ];
+        
+            if (M_Pelamaran::updatePelamaran($data)) {
+                header('Location: ' . BASEURL . 'homepage');
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal menyimpan data']);
+            }
+        }
+    }
+
+    static function deletepelamaran()
+    {
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login?auth=false');
+            exit;
+        } else {
+            $data = [
+                'id' => $_POST['id']
+            ];
+      
+            if (M_Pelamaran::deletePelamaran($data)) {
+                header('Location: ' . BASEURL . 'homepage');
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal menghapus data']);
             }
         }
     }

@@ -20,6 +20,31 @@
         color: #F8E8E0;
         border-bottom: 2px solid #F8E8E0;
     }
+
+
+    .custom-select {
+        border: 0;
+        padding: 0.75rem;
+        background-color: white;
+        color: #204E51;
+        font-size: 0.875rem;
+        line-height: 1.25;
+        border-radius: 0.375rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        transition: all 0.15s ease-in-out;
+        margin-bottom: 1rem;
+    }
+
+    .custom-select:focus {
+        outline: none;
+        ring: 2px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 </style>
 
 <header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center">
@@ -87,32 +112,28 @@
 
             </div>
             <div class="flex flex-row mt-4 gap-2" id="bottom-container">
-                <div class="flex flex-col h-[500px] overflow-y-auto" id="pekerjaan-list">
+                <div class="flex flex-col h-[800px] overflow-y-auto" id="pekerjaan-list">
                     <?php foreach ($pekerjaan as $pekerjaan_item) { ?>
 
-                        <div class="w-[300px] bg-white border border-gray-200 rounded-[4px] shadow pekerjaan-item my-1 focus:border-[#CB6062]" data-nama="<?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?>" data-deskripsi="<?= htmlspecialchars($pekerjaan_item['deskripsi']) ?>" data-alamat="<?= htmlspecialchars($pekerjaan_item['alamat']) ?>" data-status="<?= htmlspecialchars($pekerjaan_item['status']) ?>" data-id="<?= $pekerjaan_item['id'] ?>" data-foto="<?= htmlspecialchars($pekerjaan_item['foto']) ?>" data-tugas="<?= htmlspecialchars($pekerjaan_item['tugas']) ?>" 
-                        data-waktu_kerja="<?= htmlspecialchars($pekerjaan_item['waktu_kerja']) ?>" data-kompensasi="<?= htmlspecialchars($pekerjaan_item['kompensasi']) ?>" 
-                        data-batas="<?= htmlspecialchars($pekerjaan_item['batas']) ?>" data-email="<?= htmlspecialchars($pekerjaan_item['email']) ?>" data-telp="<?= htmlspecialchars($pekerjaan_item['telp']) ?>">
+
+                        <div class="w-[470px] h-[200px] bg-white border border-gray-200 rounded-[4px] shadow pekerjaan-item my-1 focus:border-[#CB6062]" data-nama="<?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?>" data-deskripsi="<?= htmlspecialchars($pekerjaan_item['deskripsi']) ?>" data-alamat="<?= htmlspecialchars($pekerjaan_item['alamat']) ?>" data-status="<?= htmlspecialchars($pekerjaan_item['status']) ?>" data-id="<?= $pekerjaan_item['id'] ?>" data-foto="<?= htmlspecialchars($pekerjaan_item['foto']) ?>" data-tugas="<?= htmlspecialchars($pekerjaan_item['tugas']) ?>" data-waktu_kerja="<?= htmlspecialchars($pekerjaan_item['waktu_kerja']) ?>" data-kompensasi="<?= htmlspecialchars($pekerjaan_item['kompensasi']) ?>" data-batas="<?= htmlspecialchars($pekerjaan_item['batas']) ?>" data-email="<?= htmlspecialchars($pekerjaan_item['email']) ?>" data-telp="<?= htmlspecialchars($pekerjaan_item['telp']) ?>" data-per="<?= htmlspecialchars($pekerjaan_item['per']) ?>" data-waktu_selesai="<?= htmlspecialchars($pekerjaan_item['waktu_selesai']) ?>">
                             <div class="flex flex-row">
-                                <a href="#">
-                                    <img class="rounded-t-lg max-w-[50px] h-full" src="<?= urlpath('uploads/foto_pekerjaan/' . htmlspecialchars($pekerjaan_item['foto'])) ?>" alt="<?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?>" />
-                                </a>
-                                <div class="flex flex-col w-[300px]">
-
-                                    <div class="p-2">
+                                <div class="flex flex-col w-full">
+                                    <div class="p-4">
                                         <a href="#">
-                                            <h5 class="mb-1 text-[16px] underline font-bold tracking-tight text-gray-900 text-wrap"><?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?></h5>
+                                            <h5 class="mb-1 text-[20px] underline font-bold tracking-tight text-black text-wrap"><?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?></h5>
                                         </a>
-                                        <p class=" font-normal text-gray-700 dark:text-gray-400 text-[12px]"><?= htmlspecialchars($pekerjaan_item['alamat']) ?></p>
-                                        <div class="flex flex-row items-center gap-2">
+                                        <p class=" font-normal text-gray-700  text-[16px]"><?= htmlspecialchars($pekerjaan_item['alamat']) ?></p>
+                                        <div class="flex flex-row items-center gap-1 mt-2">
+                                            <p class=" font-normal text-black  text-[14px]">Rp <?= number_format($pekerjaan_item['kompensasi'], 2, ',', '.') ?></p>
+                                            <p class=" font-normal text-black  text-[14px]">per</p>
+                                            <p class=" font-normal text-black   text-[14px] capitalize"><?= htmlspecialchars($pekerjaan_item['per']) ?></p>
 
-                                            <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Durasi</p>
-                                            <div class="flex flex-1 justify-end">
-                                                <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Pendaftar :</p>
-                                            </div>
                                         </div>
-                                        <div class="rounded-full flex flex-row items-center gap-2">
-                                            <p class="text-[12px] text-green-300"><?= htmlspecialchars($pekerjaan_item['status']) ?></p>
+                                        <p class=" font-normal text-black  text-[14px] capitalize">Batas Lamaran : <?= htmlspecialchars($pekerjaan_item['batas']) ?></p>
+                                        <p class=" font-normal text-black  text-[14px] capitalize overflow-ellipsis"><?= htmlspecialchars($pekerjaan_item['tugas']) ?></p>
+                                        <div class="flex flex-1 justify-end">
+                                            <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Pendaftar :</p>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +144,7 @@
                 <?php if ($pekerjaan == null) { ?>
                     <p>Belum ada pekerjaan</p>
                 <?php } else { ?>
-                    <div id="pekerjaan-details" class="flex-1 p-5 mb-4 bg-white border border-gray-200 rounded-[4px] shadow dark:bg-gray-800 w-[500px] items-center justify-center flex">
+                    <div id="pekerjaan-details" class="flex-1 p-5 mb-4 bg-white border border-gray-200 rounded-[4px] shadow dark:bg-gray-800 w-[700px] items-center justify-center flex">
                         <div id="predetails-content">Klik untuk melihat detail</div>
                         <div id="details-content" class="">
                             <!-- Details will be displayed here -->
@@ -169,35 +190,26 @@
 
             </div>
             <div class="flex flex-row mt-4 gap-2" id="bottom-container">
-                <div class="flex flex-col h-[500px] overflow-y-auto" id="pekerjaan-list">
+                <div class="flex flex-col h-[800px] overflow-y-auto" id="pekerjaan-list">
                     <?php foreach ($pekerjaan as $pekerjaan_item) { ?>
-
-                        <div class="w-[300px] bg-white border border-gray-200 rounded-[4px] shadow pekerjaan-item my-1 focus:border-[#CB6062]" 
-                        data-nama="<?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?>" 
-                        data-deskripsi="<?= htmlspecialchars($pekerjaan_item['deskripsi']) ?>" data-alamat="<?= htmlspecialchars($pekerjaan_item['alamat']) ?>" 
-                        data-status="<?= htmlspecialchars($pekerjaan_item['status']) ?>" data-id="<?= $pekerjaan_item['id'] ?>" 
-                        data-foto="<?= htmlspecialchars($pekerjaan_item['foto']) ?>" data-tugas="<?= htmlspecialchars($pekerjaan_item['tugas']) ?>" 
-                        data-waktu_kerja="<?= htmlspecialchars($pekerjaan_item['waktu_kerja']) ?>" data-kompensasi="<?= htmlspecialchars($pekerjaan_item['kompensasi']) ?>" 
-                        data-batas="<?= htmlspecialchars($pekerjaan_item['batas']) ?>" data-email="<?= htmlspecialchars($pekerjaan_item['email']) ?>" data-telp="<?= htmlspecialchars($pekerjaan_item['telp']) ?>">
-                            <div class="flex flex-row" id="kerja-container">
-                                <div id="pic-container" class="w-[50px] h-full bg-cover bg-center bg-no-repeat" style="background-image: url('<?= urlpath('uploads/foto_pekerjaan/' . htmlspecialchars($pekerjaan_item['foto'])) ?>')"></div>
-
-                                <div class="flex flex-col w-[300px]">
-
-                                    <div class="p-2">
+                        <div class="w-[470px] h-[200px] bg-white border border-gray-200 rounded-[4px] shadow pekerjaan-item my-1 focus:border-[#CB6062]" data-nama="<?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?>" data-deskripsi="<?= htmlspecialchars($pekerjaan_item['deskripsi']) ?>" data-alamat="<?= htmlspecialchars($pekerjaan_item['alamat']) ?>" data-status="<?= htmlspecialchars($pekerjaan_item['status']) ?>" data-id="<?= $pekerjaan_item['id'] ?>" data-foto="<?= htmlspecialchars($pekerjaan_item['foto']) ?>" data-tugas="<?= htmlspecialchars($pekerjaan_item['tugas']) ?>" data-waktu_kerja="<?= htmlspecialchars($pekerjaan_item['waktu_kerja']) ?>" data-kompensasi="<?= htmlspecialchars($pekerjaan_item['kompensasi']) ?>" data-batas="<?= htmlspecialchars($pekerjaan_item['batas']) ?>" data-email="<?= htmlspecialchars($pekerjaan_item['email']) ?>" data-telp="<?= htmlspecialchars($pekerjaan_item['telp']) ?>" data-per="<?= htmlspecialchars($pekerjaan_item['per']) ?>" data-waktu_selesai="<?= htmlspecialchars($pekerjaan_item['waktu_selesai']) ?>">
+                            <div class="flex flex-row">
+                                <div class="flex flex-col w-full">
+                                    <div class="p-4">
                                         <a href="#">
-                                            <h5 class="mb-1 text-[16px] underline font-bold tracking-tight text-gray-900 text-wrap"><?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?></h5>
+                                            <h5 class="mb-1 text-[20px] underline font-bold tracking-tight text-black text-wrap"><?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?></h5>
                                         </a>
-                                        <p class=" font-normal text-gray-700 dark:text-gray-400 text-[12px]"><?= htmlspecialchars($pekerjaan_item['alamat']) ?></p>
-                                        <div class="flex flex-row items-center gap-2">
+                                        <p class=" font-normal text-gray-700  text-[16px]"><?= htmlspecialchars($pekerjaan_item['alamat']) ?></p>
+                                        <div class="flex flex-row items-center gap-1 mt-2">
+                                            <p class=" font-normal text-black  text-[14px]">Rp <?= number_format($pekerjaan_item['kompensasi'], 2, ',', '.') ?></p>
+                                            <p class=" font-normal text-black  text-[14px]">per</p>
+                                            <p class=" font-normal text-black   text-[14px] capitalize"><?= htmlspecialchars($pekerjaan_item['per']) ?></p>
 
-                                            <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Durasi</p>
-                                            <div class="flex flex-1 justify-end">
-                                                <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Pendaftar :</p>
-                                            </div>
                                         </div>
-                                        <div class="rounded-full flex flex-row items-center gap-2">
-                                            <p class="text-[12px] text-green-300"><?= htmlspecialchars($pekerjaan_item['status']) ?></p>
+                                        <p class=" font-normal text-black  text-[14px] capitalize">Batas Lamaran : <?= htmlspecialchars($pekerjaan_item['batas']) ?></p>
+                                        <p class=" font-normal text-black  text-[14px] capitalize overflow-ellipsis"><?= htmlspecialchars($pekerjaan_item['tugas']) ?></p>
+                                        <div class="flex flex-1 justify-end">
+                                            <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Pendaftar :</p>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +291,7 @@
                 <?php } else { ?>
 
 
-                    <div id="pekerjaan-details" class="flex-1 p-5 mb-4 bg-white border border-gray-200 rounded-[4px] shadow dark:bg-gray-800 w-[500px] items-center justify-center flex">
+                    <div id="pekerjaan-details" class="flex-1 p-5 mb-4 bg-white border border-gray-200 rounded-[4px] shadow dark:bg-gray-800 w-[700px] items-center justify-center flex">
                         <div id="predetails-content">Klik untuk melihat detail</div>
                         <div id="details-content">
                             <!-- Details will be displayed here -->
@@ -309,19 +321,17 @@
                                         <input type="hidden" name="status" value="ongoing">
                                         <div class="flex flex-row gap-8">
                                             <div class="flex flex-col">
-
                                                 <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     Nama Pekerjaan
                                                 </label>
-                                                <input type="text" name="nama_pekerjaan" id="nama_pekerjaan0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi Nama Kegiatan">
+                                                <input type="text" name="nama_pekerjaan" id="nama_pekerjaan0" class="w-[500px] custom-select" value="" placeholder="Nama Pekerjaan">
                                                 </input>
                                             </div>
                                             <div class="flex flex-col">
-
                                                 <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     Lokasi
                                                 </label>
-                                                <input type="text" name="alamat" id="alamat0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi Lokasi Kerja">
+                                                <input type="text" name="alamat" id="alamat0" class="w-[500px] custom-select" value="" placeholder="Lokasi">
                                                 </input>
                                             </div>
                                         </div>
@@ -330,45 +340,56 @@
                                                 <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     Waktu Kerja
                                                 </label>
-                                                <input type="text" name="waktu_kerja" id="waktu_kerja0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi Waktu Kerja">
-                                                </input>
+                                                <div class="flex flex-row gap-4">
+                                                    <input type="time" name="waktu_kerja" id="waktu_kerja0" class="w-[242px] custom-select" value="" placeholder="">
+                                                    </input>
+                                                    <input type="time" name="waktu_selesai" id="waktu_kerja0" class="w-[242px] custom-select" value="" placeholder="">
+                                                    </input>
+                                                </div>
                                             </div>
                                             <div class="flex flex-col">
                                                 <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     Kompensasi
                                                 </label>
-                                                <input type="text" name="kompensasi" id="kompensasi0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi Kompensasi Kerja">
-                                                </input>
+                                                <div class="flex flex-row gap-4">
+                                                    <div class="flex flex-col">
+                                                        <input type="number" name="kompensasi" id="kompensasi0" class="w-[380px] custom-select" value="" placeholder="Kompensasi">
+                                                        </input>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <select name="per" id="per0" class="custom-select w-[100px] ease-linear transition-all duration-150 mb-4">
+                                                            <option value="hari">Hari</option>
+                                                            <option value="minggu">Minggu</option>
+                                                            <option value="bulan">Bulan</option>
+                                                            <option value="tahun">Tahun</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-
-
-
                                         <div class="flex flex-row justify-evenly">
                                             <div class="flex flex-col">
 
                                                 <label class="flex justify-center mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     Email
                                                 </label>
-                                                <input type="text" name="email" id="email0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi Email Anda">
+                                                <input type="text" name="email" id="email0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Email">
                                             </div>
                                             <div class="flex flex-col">
                                                 </input><label class="flex justify-center mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     No.Telp
                                                 </label>
-                                                <input type="text" name="telp" id="telp0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi No. Telp Anda">
+                                                <input type="text" name="telp" id="telp0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Telp">
                                                 </input>
                                             </div>
                                             <div class="flex flex-col">
                                                 </input><label class="flex justify-center mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                     Batas Lamaran
                                                 </label>
-                                                <input type="date" name="batas" id="batas0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Isi Batas Lamaran">
+                                                <input type="date" name="batas" id="batas0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="" placeholder="Batas Lamaran">
                                                 </input>
                                             </div>
                                         </div>
-
-
                                         <div class="flex flex-row gap-8">
                                             <div class="flex flex-col">
                                                 <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
@@ -492,9 +513,60 @@
                 fileNameParagraph.innerHTML = svgCode + 'Klik Untuk Unggah Foto Pekerjaan';
             }
         }
+
+        function number_format(number, decimals, decPoint, thousandsSep) {
+            number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+            const n = !isFinite(+number) ? 0 : +number;
+            const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+            const sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+            const dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+            let s = '';
+            const toFixedFix = function(n, prec) {
+                const k = Math.pow(10, prec);
+                return '' + (Math.round(n * k) / k).toFixed(prec);
+            };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || '').length < prec) {
+                s[1] = s[1] || '';
+                s[1] += new Array(prec - s[1].length + 1).join('0');
+            }
+            return s.join(dec);
+        }
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            function formatTime(time) {
+                const [hours, minutes] = time.split(':');
+                return `${hours}:${minutes}`;
+            }
+
+            function number_format(number, decimals, decPoint, thousandsSep) {
+                number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+                const n = !isFinite(+number) ? 0 : +number;
+                const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+                const sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+                const dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+                let s = '';
+                const toFixedFix = function(n, prec) {
+                    const k = Math.pow(10, prec);
+                    return '' + (Math.round(n * k) / k).toFixed(prec);
+                };
+                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                if (s[0].length > 3) {
+                    s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+                }
+                if ((s[1] || '').length < prec) {
+                    s[1] = s[1] || '';
+                    s[1] += new Array(prec - s[1].length + 1).join('0');
+                }
+                return s.join(dec);
+            }
+
             const pekerjaanItems = document.querySelectorAll('.pekerjaan-item');
             const detailsContainer = document.getElementById('pekerjaan-details');
             const preDetailsContent = document.getElementById('predetails-content');
@@ -512,8 +584,11 @@
                     const nama = this.getAttribute('data-nama');
                     const deskripsi = this.getAttribute('data-deskripsi');
                     const tugas = this.getAttribute('data-tugas');
-                    const waktu_kerja = this.getAttribute('data-waktu_kerja');
+                    const waktu_kerja = formatTime(this.getAttribute('data-waktu_kerja'));
+                    const waktu_selesai = formatTime(this.getAttribute('data-waktu_selesai'));
                     const kompensasi = this.getAttribute('data-kompensasi');
+                    const kompensasiformatted = number_format(kompensasi, 2, ',', '.');
+                    const per = this.getAttribute('data-per');
                     const batas = this.getAttribute('data-batas');
                     const alamat = this.getAttribute('data-alamat');
                     const status = this.getAttribute('data-status');
@@ -522,7 +597,6 @@
                     const telp = this.getAttribute('data-telp');
                     const id = this.getAttribute('data-id');
 
-                    console.log(foto);
 
                     preDetailsContent.style.display = 'none';
                     detailsContainer.classList.remove('items-center', 'justify-center', 'flex');
@@ -530,7 +604,7 @@
                     if (rolesId === 3) {
                         buttonHTML = `<button class="text-white bg-[#CB6062] hover:bg-[#F8E8E0] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" onclick="editPekerjaan(${id})">Edit</button>`;
                     } else if (rolesId === 2) {
-                        buttonHTML = `<a href=" <?= urlpath('pelamaran/formlamaran?id=${id}') ?>" class="text-white bg-[#204E51] hover:bg-[#F8E8E0] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Daftar</a>`;
+                        buttonHTML = `<a href="<?= urlpath('pelamaran/formlamaran?id=${id}') ?>" class="text-white bg-[#204E51] hover:bg-[#F8E8E0] font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4 mb-4">Daftar</a>`;
                     }
 
                     let statusMessage = status === 'ongoing' ? 'Sedang Berjalan' : (status === 'done' ? 'Sudah Berakhir' : status);
@@ -544,8 +618,8 @@
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Deskripsi : ${deskripsi}</p>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Tugas & Tanggung Jawab : ${tugas}</p>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Alamat : ${alamat}</p>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Waktu Kerja : ${waktu_kerja}</p>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Kompensasi : ${kompensasi}</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Waktu Kerja : ${waktu_kerja} - ${waktu_selesai}</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 capitalize">Kompensasi : Rp. ${kompensasiformatted} / ${per}</p>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Cara Melamar : Jika Anda tertarik dan memenuhi persyaratan di atas, 
                     silakan kirimkan lamaran Anda melalui platform 
                     PLASA Jember dengan menyertakan informasi kontak dan pengalaman kerja Anda.</p>

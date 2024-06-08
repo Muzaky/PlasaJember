@@ -1,57 +1,4 @@
-<style>
-    .nav-footer {
-        font-size: 20px;
-        font-family: 'Montserrat';
-        color: #2A2C35;
-    }
-
-    .nav-footer a:hover {
-        color: #F8E8E0;
-        border-bottom: 2px solid #F8E8E0;
-    }
-
-    .footer-sublink {
-        font-weight: 400;
-        font-size: 20px;
-    }
-
-    .footer-sublink:hover {
-
-        color: #F8E8E0;
-        border-bottom: 2px solid #F8E8E0;
-    }
-</style>
-
-<header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center">
-    <div id="logo-container" class="flex pl-8">
-        <img src="../src/assets/Logo.png" alt="test" class="w-[112px]">
-    </div>
-    <nav class="flex flex-row pl-24 gap-8 font-medium nav-footer">
-        <?php if ($user['roles_id'] == 2) {
-            $list_perekrut = urlpath('homepage/list-perekrut'); // Correct path
-            $homepage = urlpath('homepage');
-            $historypelamaran = urlpath('pelamaran/historypelamaran');
-            echo '<a href="' . $homepage . '" class="">Cari Lowongan</a>';
-            echo '<a href="' . $list_perekrut . '" class="">List Perekrut</a>';
-            echo '<a href="' . $historypelamaran . '" class="">History Pelamaran</a>';
-        } ?>
-
-
-        <?php if ($user['roles_id'] == 3) {
-            echo '<a href="#" class="border-b-2 text-[#F8E8E0] border-[#F8E8E0]">Buat Lowongan</a>';
-        }
-        ?>
-
-
-    </nav>
-    <div class="flex justify-end flex-1 nav-footer mr-8">
-        <a href="<?= urlpath('logout') ?>">Logout</a>
-    </div>
-</header>
-
-<body>
-
-    <div class="flex justify-center" id="main-container">
+<div class="flex justify-center" id="main-container">
         <table class="w-[1280px] mt-8 text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -93,8 +40,8 @@
                             <th scope="row" class=" py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <?php echo $no++ ?>
                             </th>
-                            <th class="flex">
-                                <a href="#" class="toggle-btn" onclick="toggleDescription('user<?= $pelamaran_item['id'] ?>')">
+                            <th>
+                                <a href="#" class="toggle-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="m12 15l-4.243-4.242l1.415-1.414L12 12.172l2.828-2.828l1.415 1.414L12 15.001Z" />
                                     </svg>
@@ -120,17 +67,6 @@
                                     </button>
                                 </div>
                             </td>
-                        </tr>
-                        <tr id="user<?= $pelamaran_item['id'] ?>Description" class="hidden py-4 px-4 border-t border-gray-200">
-                            <td colspan="5" class="p-8">
-                                <h4 class="font-medium text-base text-blue-500 underline mb-2">Test Collapsible</h4>
-                                <p class="text-sm text-gray-600">
-                                    Amanda Smith is a young professional in the field of marketing. She has skills in planning and
-                                    executing creative digital marketing campaigns. In her free time, Amanda enjoys playing the piano and
-                                    exploring nature.
-                                </p>
-                            </td>
-
                         </tr>
                         <!-- Modal -->
                         <div id="editpelamaran<?= $pelamaran_item['id'] ?>" class="fixed top-0 left-0 items-center justify-center hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
@@ -214,75 +150,3 @@
             </tbody>
         </table>
     </div>
-
-    <script>
-        let activeDescriptionId = null;
-        
-        function toggleDescription(userId) {
-            const descriptionRow = document.getElementById(`${userId}Description`);
-            // const toggleIcon = document.getElementById(`${userId}Toggle`).querySelector('svg');
-            console.log('text');
-            if (activeDescriptionId !== null && activeDescriptionId !== userId) {
-                const activeDescriptionRow = document.getElementById(`${activeDescriptionId}Description`);
-                // const activeToggleIcon = document.getElementById(`${activeDescriptionId}Toggle`).querySelector('svg');
-                activeDescriptionRow.classList.add('hidden');
-                // activeToggleIcon.classList.remove('flipped-icon');
-            }
-
-            descriptionRow.classList.toggle('hidden');
-            // toggleIcon.classList.toggle('flipped-icon');
-
-            if (!descriptionRow.classList.contains('hidden')) {
-                activeDescriptionId = userId;
-            } else {
-                activeDescriptionId = null;
-            }
-        }
-    </script>
-    <script>
-        function editpelamaran($id) {
-            let editpelamaran = document.getElementById('editpelamaran' + $id)
-
-            editpelamaran.classList.remove('hidden')
-            editpelamaran.classList.add('flex')
-            setTimeout(() => {
-                editpelamaran.classList.remove('opacity-0')
-                editpelamaran.classList.add('opacity-100')
-            }, 20);
-        }
-
-        function hideeditpelamaran($id) {
-            let editpelamaran = document.getElementById('editpelamaran' + $id)
-
-            editpelamaran.classList.add('opacity-0')
-            setTimeout(() => {
-                editpelamaran.classList.remove('opacity-100')
-                editpelamaran.classList.add('hidden')
-                editpelamaran.classList.remove('flex')
-            }, 500);
-        }
-
-        function displayFileName() {
-            const fileInput = document.getElementById('dropzone-file');
-            const fileNameParagraph = document.getElementById('file-name');
-            const textcontent = document.getElementById('textcontent');
-            const svgCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                            fill="currentColor" class="w-4 h-4" id="svg-upload">
-                                                            <path fillRule="evenodd"
-                                                                d="M11.47 2.47a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06l-3.22-3.22V16.5a.75.75 0 0 1-1.5 0V4.81L8.03 8.03a.75.75 0 0 1-1.06-1.06l4.5-4.5ZM3 15.75a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z"
-                                                                clipRule="evenodd" />
-                                                        </svg>`
-            if (fileInput.files.length > 0) {
-                fileNameParagraph.textContent = fileInput.files[0].name;
-            } else {
-                fileNameParagraph.innerHTML = svgCode + 'Klik Untuk Unggah Foto Pekerjaan';
-            }
-        }
-    </script>
-
-
-</body>
-
-<footer>
-
-</footer>
