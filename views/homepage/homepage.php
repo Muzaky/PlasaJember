@@ -29,8 +29,11 @@
     <nav class="flex flex-row pl-24 gap-8 font-medium nav-footer">
         <?php if ($user['roles_id'] == 2) {
             $list_perekrut = urlpath('homepage/list-perekrut'); // Correct path
-            echo '<a href="#" class="border-b-2 text-[#F8E8E0] border-[#F8E8E0]">Cari Lowongan</a>';
+            $homepage = urlpath('homepage');
+            $historypelamaran = urlpath('pelamaran/historypelamaran');
+            echo '<a href="' . $homepage . '" class="">Cari Lowongan</a>';
             echo '<a href="' . $list_perekrut . '" class="">List Perekrut</a>';
+            echo '<a href="' . $historypelamaran . '" class="">History Pelamaran</a>';
         } ?>
 
 

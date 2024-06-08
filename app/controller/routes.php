@@ -18,6 +18,7 @@ Router::url('homepage/list-perekrut', 'get', 'C_Home::listperekrut');
 router::url('lowongan_cari', 'get', 'C_Home::testingview'); 
 Router::url('logout','get','C_Auth::logout');
 Router::url('pelamaran/formlamaran', 'get', 'C_Pelamaran::formLamaran');
+Router::url('pelamaran/historypelamaran', 'get', 'C_Pelamaran::historypelamaran');
 
 
 
@@ -27,3 +28,4 @@ Router::url('register', 'post', 'C_Auth::saveRegister');
 Router::url('login', 'post', 'C_Auth::saveLogin');
 Router::url('homepage/createpekerjaan', 'post', 'C_Home::createpekerjaan');
 Router::url('homepage/updatepekerjaan', 'post', 'C_Home::updatepekerjaan');
+Router::url('pelamaran/createpelamaran', 'post', 'C_Pelamaran::createpelamaran');
