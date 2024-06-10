@@ -10,17 +10,19 @@ Router::url('/', 'get', function () {
 });
 
 Router::url('login', 'get', 'C_Auth::login');
+Router::url('logout','get','C_Auth::logout');
+
 Router::url('register', 'get', 'C_Auth::register');
 Router::url('homepage', 'get', 'C_Home::homepage');
 Router::url('register/pekerja', 'get', 'C_Auth::registerpekerja');
 Router::url('register/perekrut', 'get', 'C_Auth::registerperekrut');
 Router::url('homepage/list-perekrut', 'get', 'C_Home::listperekrut');
 router::url('lowongan_cari', 'get', 'C_Home::testingview'); 
-Router::url('logout','get','C_Auth::logout');
+Router::url('homepage/detail-perekrut', 'get', 'C_Home::detailperekrut');
+Router::url('homepage/lihat-pelamaran', 'get', 'C_Pelamaran::lihatpelamar');
 Router::url('pelamaran/formlamaran', 'get', 'C_Pelamaran::formLamaran');
 Router::url('pelamaran/historypelamaran', 'get', 'C_Pelamaran::historypelamaran');
-
-
+Router::url('homepage/list-perekrut/rating', 'get', 'C_Rating::rating');
 
 
 
@@ -32,6 +34,8 @@ Router::url('homepage/updatepekerjaan', 'post', 'C_Pekerjaan::updatepekerjaan');
 Router::url('pelamaran/createpelamaran', 'post', 'C_Pelamaran::createpelamaran');
 Router::url('pelamaran/updatepelamaran', 'post', 'C_Pelamaran::updatepelamaran');
 Router::url('pelamaran/deletepelamaran', 'post', 'C_Pelamaran::deletepelamaran');
+Router::url('pelamaran/updatepelamaran2', 'post', 'C_Pelamaran::updatepelamaran2');
+Router::url('homepage/list-perekrut/rating/create', 'post', 'C_Rating::saveRating');
 
 #Admin
 Router::url('dashboard', 'get', 'C_Admin::dashboard');

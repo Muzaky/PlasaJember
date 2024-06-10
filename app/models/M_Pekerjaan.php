@@ -134,4 +134,19 @@ class M_Pekerjaan
         $stmt->bind_param('i', $id);
         $stmt->execute();
     }
+
+    static function getPekerjaanByidpekerjaan2($id)
+    {
+        global $conn;
+        $sql = 'SELECT * FROM pekerjaan WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        if ($data === null) {
+            return [];
+        }
+        return $data;
+    }
 }

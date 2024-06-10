@@ -56,6 +56,17 @@ class M_Users{
             return $result->fetch_assoc();
         }
     }
+    static function getUsersbyId2($id){
+        {
+            global $conn;
+            $sql = 'SELECT * FROM users WHERE id = ?';
+            $stmt = $conn->prepare( $sql );
+            $stmt->bind_param( 'i', $id );
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        }
+    }
 
     static function getAllUsers(){
         {

@@ -59,12 +59,33 @@ class C_Pelamaran
         } else {
 
             $data = [
-                
+
                 'id' => $_POST['id'],
                 'alasan' => $_POST['alasan'],
             ];
-        
+
             if (M_Pelamaran::updatePelamaran($data)) {
+                header('Location: ' . BASEURL . 'homepage');
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal menyimpan data']);
+            }
+        }
+    }
+    static function updatepelamaran2()
+    {
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login?auth=false');
+            exit;
+        } else {
+
+            $data = [
+
+                'id' => $_POST['id'],
+                'alasan' => $_POST['alasan'],
+                'status' => $_POST['status'],
+            ];
+
+            if (M_Pelamaran::updatePelamaran2($data)) {
                 header('Location: ' . BASEURL . 'homepage');
             } else {
                 echo json_encode(['success' => false, 'message' => 'Gagal menyimpan data']);
@@ -81,7 +102,7 @@ class C_Pelamaran
             $data = [
                 'id' => $_POST['id']
             ];
-      
+
             if (M_Pelamaran::deletePelamaran($data)) {
                 header('Location: ' . BASEURL . 'homepage');
             } else {
@@ -98,12 +119,55 @@ class C_Pelamaran
         } else {
             $pekerja = M_Users::getUsersbyId($_SESSION['user']['id']);
             $pelamaran = M_Pelamaran::getPelaramanbyId($pekerja['id']);
-            
+
             view('pelamaran/pelamaran_layout', [
                 'url' => 'historypelamaran',
                 'pelamaran' => $pelamaran,
                 'user' => $_SESSION['user'],
                 'pekerja' => $pekerja
+            ]);
+        }
+    }
+
+    static function lihatpelamar()
+    {
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login');
+            exit;
+        } else {
+            $perekrut = M_Perekrut::getPerekrutbyid($_SESSION['user']['id']);
+            $_SESSION['perekrut'] = $perekrut;
+            $id = $_GET['id'];
+            $pekerjaandetails = M_Pekerjaan::getPekerjaanByidpekerjaan2($id);
+            
+            $alldata = [];
+            $subdata = [];
+            foreach ($pekerjaandetails as $pekerjaandetail) {;
+
+                $pelamaran_list = M_Pelamaran::getpelamaranbyid4($pekerjaandetail['id']);
+                foreach ($pelamaran_list as $pelamarans){
+                    $users = M_Users::getUsersbyId2($pelamarans['id_users']);
+                    $pekerjaan = M_Pekerjaan::getPekerjaanByidpekerjaan($pelamarans['id_pekerjaan']);
+                    $kecamatan = M_Kecamatan::getKecamatanbyId($users['kecamatan']);
+                    $subdata[] = [
+                        'pelamaran' => $pelamarans,
+                        'users' => $users,
+                        'pekerjaan' => $pekerjaan,
+                        'kecamatan' => $kecamatan
+                    ];
+                    
+                }
+                $alldata[] = [
+                    'pekerjaandetails' => $pekerjaandetail,
+                    'pelamaran' => $subdata,
+                ];
+            }
+           
+            view('pelamaran/pelamaran_layout', [
+                'url' => 'lihatpelamardata',
+                'pelamaran' => $alldata,
+                'user' => $_SESSION['user'],
+                'perekrut' => $perekrut
             ]);
         }
     }

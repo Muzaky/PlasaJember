@@ -67,6 +67,28 @@ class M_Pelamaran
         $result = $stmt->affected_rows > 0 ? true : false;
         return $result;
     }
+    static function updatePelamaran2($data = [])
+    {
+        global $conn;
+        $id = $data['id'];
+        $alasan = $data['alasan'];
+        $status = $data['status'];
+        $dokumen = isset($data['dokumen']) ? $data['dokumen'] : null;
+
+        if ($dokumen !== null) {
+            // If foto is provided, include it in the update query
+            $stmt = $conn->prepare('UPDATE pelamaran SET alasan = ?, dokumen = ?, status = ? WHERE id = ?');
+            $stmt->bind_param('sssi', $alasan, $dokumen,$status, $id);
+        } else {
+            // If foto is not provided, exclude it from the update query
+            $stmt = $conn->prepare('UPDATE pelamaran SET alasan = ?, status = ? WHERE id = ?');
+            $stmt->bind_param('ssi', $alasan, $status, $id);
+        }
+
+        $stmt->execute();
+        $result = $stmt->affected_rows > 0 ? true : false;
+        return $result;
+    }
 
     static function deletepelamaran($data = [])
     {
@@ -116,6 +138,20 @@ class M_Pelamaran
     {
         global $conn;
         $sql = 'SELECT * FROM pelamaran WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        if ($data === null) {
+            return [];
+        }
+        return $data;
+    }
+    static function getpelamaranbyid4($id)
+    {
+        global $conn;
+        $sql = 'SELECT * FROM pelamaran WHERE id_pekerjaan = ?';
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $id);
         $stmt->execute();

@@ -201,7 +201,7 @@
             </div>
         </div>
     <?php } ?>
-    <?php if ($user['roles_id'] == 3) { ?>
+    <?php if ($user['roles_id'] == 3 && $perekrut['validasi'] == 'accepted') { ?>
         <div class="flex flex-col items-center mt-4" id="main-container">
             <div>
                 <h1 class="text-[24px] font-bold text-[#CB6062]">Selamat Datang <b><?= $perekrut['nama'] ?></b></h1>
@@ -227,61 +227,63 @@
                     <div class="flex items-center mb-6 bg-white border-b-2 w-[1240px] flex-row py-4">
                         <div class="flex flex-col justify-between px-4 leading-normal">
                             <h5 class="text-[24px] font-semibold tracking-tight text-[#CB6062] dark:text-white font-inside" id="judul-pekerjaan">
-                                <?= $pekerjaan_item['nama_pekerjaan'] ?></h5>
-                            <?php $date = new DateTime($pekerjaan_item['batas']);
+                                <?= $pekerjaan_item['pekerjaan']['nama_pekerjaan'] ?></h5>
+                            <?php $date = new DateTime($pekerjaan_item['pekerjaan']['batas']);
                             $formattedDate = $date->format('d F Y');
                             ?>
                             <p class="mb-2 text-gray-500">Batas pendaftaran : <?= $formattedDate ?></p>
                             <div class="flex flex-row gap-4">
-                                <button onclick="toggleDescription('user<?= $pekerjaan_item['id'] ?>')" class=" items-center justify-center mb-1 text-sm font-medium text-green-500 ">
-                                    <span class="text-[16px]">Lihat</span>
+                                <p class="mb-2 text-gray-500">Jumlah lamaran : <?= $pekerjaan_item['pelamarancount'] ?></p>
+                                <a href="<?= urlpath('homepage/lihat-pelamaran?id=' . $pekerjaan_item['pekerjaan']['id'] . '') ?>" class=" items-center justify-center mb-1 text-sm font-medium text-green-500 ">Lihat</a>
+                                <button onclick="toggleDescription('user<?= $pekerjaan_item['pekerjaan']['id'] ?>')" class=" items-center justify-center mb-1 text-sm font-medium text-green-500 ">
+                                    <span class="text-[16px]">Detail</span>
                                 </button>
-                                <button onclick="editPekerjaan(<?= $pekerjaan_item['id'] ?>)" class="flex items-center justify-center mb-1 text-sm font-medium text-green-500 md:justify-start">
+                                <button onclick="editPekerjaan(<?= $pekerjaan_item['pekerjaan']['id'] ?>)" class="flex items-center justify-center mb-1 text-sm font-medium text-green-500 md:justify-start">
                                     <span class="text-[16px]">Edit</span>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div id="user<?= $pekerjaan_item['id'] ?>Description" class="hidden px-6 w-[1280px]">
+                    <div id="user<?= $pekerjaan_item['pekerjaan']['id'] ?>Description" class="hidden px-6 w-[1280px]">
                         <div class="p-4">
                             <h4 class="font-medium text-base text-[#CB6062]  mb-2">Detail Pekerjaan</h4>
-                            <p class="text-[20px]"><?= $pekerjaan_item['nama_pekerjaan'] ?></p>
-                            <p><?= $pekerjaan_item['alamat'] ?></p>
+                            <p class="text-[20px]"><?= $pekerjaan_item['pekerjaan']['nama_pekerjaan'] ?></p>
+                            <p><?= $pekerjaan_item['pekerjaan']['alamat'] ?></p>
                             <span>Deskripsi :</span>
                             <p class="text-sm text-gray-600">
-                                <?= $pekerjaan_item['deskripsi'] ?>
+                                <?= $pekerjaan_item['pekerjaan']['deskripsi'] ?>
                             </p>
                             <span>Tugas :</span>
                             <p class="text-sm text-gray-600">
-                                <?= $pekerjaan_item['tugas'] ?>
+                                <?= $pekerjaan_item['pekerjaan']['tugas'] ?>
                             </p>
                             <span>Waktu Kerja :</span>
 
                             <p class="text-sm text-gray-600">
-                                <span id="waktukerjauser<?= $pekerjaan_item['id'] ?>"><?= $pekerjaan_item['waktu_kerja'] ?></span>
+                                <span id="waktukerjauser<?= $pekerjaan_item['pekerjaan']['id'] ?>"><?= $pekerjaan_item['pekerjaan']['waktu_kerja'] ?></span>
                                 -
-                                <span id="waktuselesaiuser<?= $pekerjaan_item['id'] ?>"><?= $pekerjaan_item['waktu_selesai'] ?></span>
+                                <span id="waktuselesaiuser<?= $pekerjaan_item['pekerjaan']['id'] ?>"><?= $pekerjaan_item['pekerjaan']['waktu_selesai'] ?></span>
                             </p>
 
                             <span>Kompensasi :</span>
                             <div class="flex flex-row gap-2">
                                 <p class="text-sm text-gray-600">Rp</p>
-                                <p id="kompensasiuser<?= $pekerjaan_item['id'] ?>" class="text-sm text-gray-600"><?= $pekerjaan_item['kompensasi'] ?></p>
-                                <p class="text-sm text-gray-600 capitalize">/ <?= $pekerjaan_item['per'] ?> </p>
+                                <p id="kompensasiuser<?= $pekerjaan_item['pekerjaan']['id'] ?>" class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['kompensasi'] ?></p>
+                                <p class="text-sm text-gray-600 capitalize">/ <?= $pekerjaan_item['pekerjaan']['per'] ?> </p>
                             </div>
 
                             <span>Batas Pendaftaran :</span>
                             <p class="text-sm text-gray-600"><?= $formattedDate ?></p>
                             <span>Kontak :</span>
-                            <p class="text-sm text-gray-600"><?= $pekerjaan_item['email'] ?></p>
-                            <p class="text-sm text-gray-600"><?= $pekerjaan_item['telp'] ?></p>
+                            <p class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['email'] ?></p>
+                            <p class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['telp'] ?></p>
                         </div>
                     </div>
 
                     <!-- Modal Edit -->
-                    <div id="editpekerjaan<?= $pekerjaan_item['id'] ?>" class="fixed top-0 left-0 items-center justify-center hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
+                    <div id="editpekerjaan<?= $pekerjaan_item['pekerjaan']['id'] ?>" class="fixed top-0 left-0 items-center justify-center hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
                         <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 rounded-lg shadow-lg bg-blueGray-100">
-                            <button onclick="hideeditpekerjaan(<?= $pekerjaan_item['id'] ?>)" class="absolute left-[20px] top-[20px] flex items-center text-black text-sm font-medium">
+                            <button onclick="hideeditpekerjaan(<?= $pekerjaan_item['pekerjaan']['id'] ?>)" class="absolute left-[20px] top-[20px] flex items-center text-black text-sm font-medium">
                                 <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                                     </path>
@@ -289,7 +291,7 @@
                                 Back
                             </button>
                             <div class="flex-auto px-4 py-4 pt-0 lg:px-10">
-                                <form class="flex flex-col items-center justify-center" action="<?= urlpath('homepage/updatepekerjaan') ?>" method="post" enctype="multipart/form-data" id="editlokerform<?= $pekerjaan_item['id'] ?>">
+                                <form class="flex flex-col items-center justify-center" action="<?= urlpath('homepage/updatepekerjaan') ?>" method="post" enctype="multipart/form-data" id="editlokerform<?= $pekerjaan_item['pekerjaan']['id'] ?>">
                                     <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-[#204E51]">
                                         Form Buat Loker
                                     </h6>
@@ -298,19 +300,19 @@
                                             <div class="w-full mb-3">
                                                 <input type="hidden" name="status" value="ongoing">
                                                 <div class="flex flex-row gap-8">
-                                                    <input type="hidden" name="id" value="<?= $pekerjaan_item['id'] ?>">
+                                                    <input type="hidden" name="id" value="<?= $pekerjaan_item['pekerjaan']['id'] ?>">
                                                     <div class="flex flex-col">
                                                         <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             Nama Pekerjaan
                                                         </label>
-                                                        <input type="text" name="nama_pekerjaan" id="nama_pekerjaan0" class="w-[500px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?>" placeholder="Nama Pekerjaan">"
+                                                        <input type="text" name="nama_pekerjaan" id="nama_pekerjaan0" class="w-[500px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['nama_pekerjaan']) ?>" placeholder="Nama Pekerjaan">"
                                                         </input>
                                                     </div>
                                                     <div class="flex flex-col">
                                                         <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             Lokasi
                                                         </label>
-                                                        <input type="text" name="alamat" id="alamat0" class="w-[500px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['alamat']) ?>" placeholder="Lokasi">
+                                                        <input type="text" name="alamat" id="alamat0" class="w-[500px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['alamat']) ?>" placeholder="Lokasi">
                                                         </input>
                                                     </div>
                                                 </div>
@@ -320,9 +322,9 @@
                                                             Waktu Kerja
                                                         </label>
                                                         <div class="flex flex-row gap-4">
-                                                            <input type="time" name="waktu_kerja" id="waktu_kerja0" class="w-[242px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['waktu_kerja']) ?>" placeholder="">
+                                                            <input type="time" name="waktu_kerja" id="waktu_kerja0" class="w-[242px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['waktu_kerja']) ?>" placeholder="">
                                                             </input>
-                                                            <input type="time" name="waktu_selesai" id="waktu_kerja0" class="w-[242px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['waktu_selesai']) ?>" placeholder="">
+                                                            <input type="time" name="waktu_selesai" id="waktu_kerja0" class="w-[242px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['waktu_selesai']) ?>" placeholder="">
                                                             </input>
                                                         </div>
                                                     </div>
@@ -332,12 +334,12 @@
                                                         </label>
                                                         <div class="flex flex-row gap-4">
                                                             <div class="flex flex-col">
-                                                                <input type="number" name="kompensasi" id="kompensasi0" class="w-[380px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['kompensasi']) ?>" placeholder="Kompensasi">
+                                                                <input type="number" name="kompensasi" id="kompensasi0" class="w-[380px] custom-select" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['kompensasi']) ?>" placeholder="Kompensasi">
                                                                 </input>
                                                             </div>
                                                             <div class="flex flex-col">
                                                                 <?php
-                                                                $selected_per = htmlspecialchars($pekerjaan_item['per']);
+                                                                $selected_per = htmlspecialchars($pekerjaan_item['pekerjaan']['per']);
                                                                 $options = ['hari', 'minggu', 'bulan', 'tahun'];
                                                                 ?>
 
@@ -359,20 +361,20 @@
                                                         <label class="flex justify-center mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             Email
                                                         </label>
-                                                        <input type="text" name="email" id="email0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="<?= htmlspecialchars($pekerjaan_item['email']) ?>" placeholder="Email">
+                                                        <input type="text" name="email" id="email0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['email']) ?>" placeholder="Email">
                                                     </div>
                                                     <div class="flex flex-col">
                                                         </input><label class="flex justify-center mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             No.Telp
                                                         </label>
-                                                        <input type="text" name="telp" id="telp0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="<?= htmlspecialchars($pekerjaan_item['telp']) ?>" placeholder="Telp">
+                                                        <input type="text" name="telp" id="telp0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['telp']) ?>" placeholder="Telp">
                                                         </input>
                                                     </div>
                                                     <div class="flex flex-col">
                                                         </input><label class="flex justify-center mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             Batas Lamaran
                                                         </label>
-                                                        <input type="date" name="batas" id="batas0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="<?= htmlspecialchars($pekerjaan_item['batas']) ?>" placeholder="Batas Lamaran">
+                                                        <input type="date" name="batas" id="batas0" class="border-0 p-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-[200px] ease-linear transition-all duration-150 mb-4" value="<?= htmlspecialchars($pekerjaan_item['pekerjaan']['batas']) ?>" placeholder="Batas Lamaran">
                                                         </input>
                                                     </div>
                                                 </div>
@@ -381,13 +383,13 @@
                                                         <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             Deskripsi
                                                         </label>
-                                                        <textarea name="deskripsi" id="deskripsi0" class="border-0 px-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 h-40 shadow-lg resize-none mb-4"><?= htmlspecialchars($pekerjaan_item['deskripsi']) ?></textarea>
+                                                        <textarea name="deskripsi" id="deskripsi0" class="border-0 px-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 h-40 shadow-lg resize-none mb-4"><?= htmlspecialchars($pekerjaan_item['pekerjaan']['deskripsi']) ?></textarea>
                                                     </div>
                                                     <div class="flex flex-col">
                                                         <label class="block mb-2 text-xs font-bold uppercase text-[#204E51]" htmlfor="grid-password">
                                                             Isikan Tugas
                                                         </label>
-                                                        <textarea name="tugas" id="tugas0" class="border-0 px-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 h-40 shadow-lg resize-none mb-4"><?= htmlspecialchars($pekerjaan_item['tugas']) ?></textarea>
+                                                        <textarea name="tugas" id="tugas0" class="border-0 px-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 h-40 shadow-lg resize-none mb-4"><?= htmlspecialchars($pekerjaan_item['pekerjaan']['tugas']) ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="mb-[18px] relative">
@@ -409,7 +411,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="flex mt-4" form="editlokerform<?= $pekerjaan_item['id'] ?>">
+                                    <button type="submit" class="flex mt-4" form="editlokerform<?= $pekerjaan_item['pekerjaan']['id'] ?>">
                                         Simpan
                                     </button>
                                 </form>
@@ -419,7 +421,9 @@
 
 
                 </div>
-            <?php } ?>
+            <?php }  ?>
+
+          
 
             <!-- Modal -->
             <div id="editbutton" class="fixed top-0 left-0 items-center justify-center hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
@@ -552,7 +556,13 @@
                 </div>
             </div>
         </div>
-    <?php } ?>
+    <?php } else { ?>
+        <div class="flex flex-col items-center justify-center">
+                <img src="src/assets/Target.png" class="w-[500px]" alt="">
+                <h1 class="text-[24px] font-bold text-[#2A2C35]">Kamu Harus Tervalidasi ! </h1>
+                <h1 class="text-[16px] font-bold text-[#2A2C35]">Tunggu validasi admin ya ! </h1>
+        </div>
+        <?php } ?>
 
     <script>
         function showEditButton() {
@@ -600,9 +610,7 @@
         }
 
 
-
-        // Add an event listener for the 'change' event on the file input element
-        document.getElementById('dropzone-file0').addEventListener('change', displayFileName1);
+        // Add an event listener for the 'change' event on the file input element document.getElementById('dropzone-file0').addEventListener('change', displayFileName1);
 
         // Modify the displayFileName1() function to use the event parameter
         function displayFileName1(event) {
@@ -668,33 +676,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            function formatTime(time) {
-                const [hours, minutes] = time.split(':');
-                return `${hours}:${minutes}`;
-            }
-
-            function number_format(number, decimals, decPoint, thousandsSep) {
-                number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
-                const n = !isFinite(+number) ? 0 : +number;
-                const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
-                const sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
-                const dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
-                let s = '';
-                const toFixedFix = function(n, prec) {
-                    const k = Math.pow(10, prec);
-                    return '' + (Math.round(n * k) / k).toFixed(prec);
-                };
-                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-                if (s[0].length > 3) {
-                    s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, sep);
-                }
-                if ((s[1] || '').length < prec) {
-                    s[1] = s[1] || '';
-                    s[1] += new Array(prec - s[1].length + 1).join('0');
-                }
-                return s.join(dec);
-            }
+            
 
             const pekerjaanItems = document.querySelectorAll('.pekerjaan-item');
             const detailsContainer = document.getElementById('pekerjaan-details');
