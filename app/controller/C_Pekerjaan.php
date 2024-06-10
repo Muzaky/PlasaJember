@@ -49,8 +49,17 @@ class C_Pekerjaan {
                 'nama_pekerjaan' => $_POST['nama_pekerjaan'],
                 'deskripsi' => $_POST['deskripsi'],
                 'alamat' => $_POST['alamat'],
-                'status' => $_POST['status']
+                'status' => $_POST['status'],
+                'tugas' => $_POST['tugas'],
+                'waktu_kerja' => $_POST['waktu_kerja'],
+                'waktu_selesai' => $_POST['waktu_selesai'],
+                'kompensasi' => $_POST['kompensasi'],
+                'per' => $_POST['per'],
+                'batas' => $_POST['batas'],
+                'email' => $_POST['email'],
+                'telp' => $_POST['telp']
             ];
+            var_dump($data);
             if (M_Pekerjaan::updatePekerjaan($data)) {
                 header('Location: ' . BASEURL . 'homepage');
             } else {

@@ -68,4 +68,31 @@ class M_Perekrut{
             return $result->fetch_assoc();
         }
     }
+    static function getPerekrutbyid2($id){
+        {
+            global $conn;
+            $sql = 'SELECT * FROM perekrut WHERE id = ?';
+            $stmt = $conn->prepare( $sql );
+            $stmt->bind_param( 'i', $id );
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+    }
+
+    static function updatePerekrut($data = []){
+        global $conn;
+        $id = $data['id'];
+        $nama = $data['nama'];
+        $email = $data['email'];
+        $phone = $data['phone'];
+        $alamat = $data['alamat'];
+        $validasi = $data['validasi'];
+
+        $stmt = $conn->prepare("UPDATE perekrut SET nama = ?, email = ?, phone = ?,alamat = ?, validasi = ? WHERE id = ?");
+        $stmt->bind_param('sssssi', $nama, $email, $phone,$alamat, $validasi ,$id);
+        $stmt->execute();
+        $result = $stmt->affected_rows > 0 ? true : false;
+        return $result;
+    }
 }

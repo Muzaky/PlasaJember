@@ -72,8 +72,15 @@
         <img src="../src/assets/Logo.png" alt="test" class="w-[112px]">
     </div>
     <nav id="nav-footer" class="flex flex-row pl-24 gap-8 font-medium">
-        <a href="<?= urlpath('homepage') ?>">Cari lowongan</a>
-        <a href="<?= urlpath('list-perekrut') ?>" class="border-b-2 text-[#F8E8E0] border-[#F8E8E0]">List Perekrut</a>
+    <?php if ($user['roles_id'] == 2) {
+            $list_perekrut = urlpath('homepage/list-perekrut'); // Correct path
+            $homepage = urlpath('homepage');
+            $historypelamaran = urlpath('pelamaran/historypelamaran');
+            echo '<a href="' . $homepage . '" class="">Cari Lowongan</a>';
+            echo '<a href="' . $list_perekrut . '" class="">List Perekrut</a>';
+            echo '<a href="' . $historypelamaran . '" class="">History Pelamaran</a>';
+        } ?>
+        
     </nav>
 </header>
 

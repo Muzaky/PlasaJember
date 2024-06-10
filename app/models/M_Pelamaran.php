@@ -98,8 +98,33 @@ class M_Pelamaran
         return $data;
     }
 
-    static function getpelamaranjoinbyid($id)
+    static function getpelamaranbyid2($id)
     {
         global $conn;
+        $sql = 'SELECT * FROM pelamaran WHERE id_users = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        if ($data === null) {
+            return [];
+        }
+        return $data;
     }
+    static function getpelamaranbyid3($id)
+    {
+        global $conn;
+        $sql = 'SELECT * FROM pelamaran WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        if ($data === null) {
+            return [];
+        }
+        return $data;
+    }
+    
 }

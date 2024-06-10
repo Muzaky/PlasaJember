@@ -84,9 +84,13 @@ class C_Auth
 
         if ($users) {
             unset($users['password']);
+            session_regenerate_id(true);
             $_SESSION['user'] = $users;
-            
-            header('Location: ' . BASEURL . 'homepage');
+            if ($users['roles_id'] == 1) {
+                header('Location: ' . BASEURL . 'dashboard');
+            } else {
+                header('Location: ' . BASEURL . 'homepage');
+            }
         } else {
             header('Location: ' . BASEURL . 'login?failed=true');
         }
@@ -113,5 +117,6 @@ class C_Auth
 
         session_destroy();
         header('Location: ' . BASEURL);
+        exit();
     }
 }

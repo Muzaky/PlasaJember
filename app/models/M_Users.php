@@ -56,4 +56,40 @@ class M_Users{
             return $result->fetch_assoc();
         }
     }
+
+    static function getAllUsers(){
+        {
+            global $conn;
+            $sql = 'SELECT * FROM users';
+            $stmt = $conn->prepare( $sql );
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+    }
+
+    static function deleteUsers($id){
+        {
+            global $conn;
+            $sql = 'DELETE FROM users WHERE id = ?';
+            $stmt = $conn->prepare( $sql );
+            $stmt->bind_param( 'i', $id );
+            $stmt->execute();
+        }
+    }
+
+    static function updateUsers($data = []){
+        global $conn;
+        $id = $data['id'];
+        $nama = $data['nama'];
+        $email = $data['email'];
+        $phone = $data['phone'];
+        $alamat = $data['alamat'];
+
+        $stmt = $conn->prepare("UPDATE users SET nama = ?, email = ?, phone = ?,alamat = ? WHERE id = ?");
+        $stmt->bind_param('ssssi', $nama, $email, $phone, $alamat, $id);
+        $stmt->execute();
+        $result = $stmt->affected_rows > 0 ? true : false;
+        return $result;
+    }
 }
