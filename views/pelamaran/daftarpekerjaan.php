@@ -55,6 +55,7 @@
                 Details Pekerjaan
             </h2>
             <div id="sub-content" class="flex flex-col gap-4 mt-4 w-[800px]">
+                <img src="<?= urlpath('uploads/foto_pekerjaan/' . $pekerjaandetails['foto'])  ?>" alt="">
                 <h3><?= $pekerjaandetails['nama_pekerjaan'] ?></h3>
                 <div>
                     <label for="">Deskripsi : </label>
@@ -70,11 +71,16 @@
                 </div>
                 <div>
                     <label for="">Waktu Kerja : </label>
-                    <h3 class="text-left flex"><?= $pekerjaandetails['waktu_kerja'] ?></h3>
+                    <?php
+                    $formattedTimeStart = date('H:i', strtotime($pekerjaandetails['waktu_kerja']));
+                    $formattedTimeEnd = date('H:i', strtotime($pekerjaandetails['waktu_selesai']));
+                    ?>
+                    <h3 class="text-left flex"><?= $formattedTimeStart ?> - <?= $formattedTimeEnd ?></h3>
                 </div>
                 <div>
                     <label for="">Kompensasi : </label>
-                    <h3 class="text-left flex"><?= $pekerjaandetails['kompensasi'] ?></h3>
+
+                    <h3 class="text-left flex"><?= $kompensasirupiah = "Rp " . number_format($pekerjaandetails['kompensasi'], 0, ',', '.'); ?></h3>
                 </div>
                 <div>
                     <label for="">Batas Akhir Lamaran : </label>
@@ -178,6 +184,34 @@
                 lamarbutton.classList.add('hidden')
                 lamarbutton.classList.remove('flex')
             }, 500);
+        }
+
+        function formatTime(time) {
+            const [hours, minutes] = time.split(':');
+            return `${hours}:${minutes}`;
+        }
+
+        function number_format(number, decimals, decPoint, thousandsSep) {
+            number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+            const n = !isFinite(+number) ? 0 : +number;
+            const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+            const sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+            const dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+            let s = '';
+            const toFixedFix = function(n, prec) {
+                const k = Math.pow(10, prec);
+                return '' + (Math.round(n * k) / k).toFixed(prec);
+            };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || '').length < prec) {
+                s[1] = s[1] || '';
+                s[1] += new Array(prec - s[1].length + 1).join('0');
+            }
+            return s.join(dec);
         }
     </script>
 </body>

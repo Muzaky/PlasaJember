@@ -57,11 +57,11 @@
             <p class="mt-[12px] text-[#F8E8E0] w-[400px] text-wrap">Pilihlah ingin mendaftar sebagai apa </p>
             <div class="flex justify-center pt-[80px]">
                 <form action="" class="flex flex-col mt-[24px] gap-8">
-                    <div class="inputbox p-2 bg-[#F8E8E0] flex justify-center">
-                        <a class="text-[#CB6062]" href="<?= urlpath('register/pekerja') ?>">Pekerja</a>
+                    <div class="inputbox p-2 bg-[#F8E8E0] flex justify-center rounded-xl">
+                        <a class="text-[#CB6062] px-2 py-2 rounded-xl" href="<?= urlpath('register/pekerja') ?>">Pekerja</a>
                     </div>
-                    <div class="inputbox p-2 bg-[#F8E8E0] flex justify-center">
-                        <a class="text-[#CB6062]" href="<?= urlpath('register/perekrut') ?>">Perekrut</a>
+                    <div class="inputbox p-2 bg-[#F8E8E0] flex justify-center rounded-xl">
+                        <a class="text-[#CB6062] px-2 py-2 rounded-xl" href="<?= urlpath('register/perekrut') ?>">Perekrut</a>
                     </div>
                 </form>
             </div>

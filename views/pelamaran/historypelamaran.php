@@ -51,7 +51,10 @@
 
 <body>
 
-    <div class="flex justify-center" id="main-container">
+    <div class="flex justify-center flex-col items-center" id="main-container">
+        <div>
+            <h1 class="text-[#204E51] font-bold text-3xl mt-16 mb-4">Data History Pelamaran</h1>
+        </div>
         <table class="w-[1280px] mt-8 text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -216,7 +219,7 @@
 
     <script>
         let activeDescriptionId = null;
-        
+
         function toggleDescription(userId) {
             const descriptionRow = document.getElementById(`${userId}Description`);
             // const toggleIcon = document.getElementById(`${userId}Toggle`).querySelector('svg');

@@ -98,7 +98,9 @@
         <div class="flex-1 relative z-0 overflow-y-auto focus:outline-none w-[1400px] justify-center" tabindex="0">
             <!-- Your content goes here -->
 
-
+            <div>
+                 <h1 class="text-[#204E51] font-bold text-3xl mt-6 mb-6">Data Pekerjaan</h1>
+             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

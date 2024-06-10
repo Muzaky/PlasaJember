@@ -146,12 +146,12 @@
                 </div>
                 <div>
                     <?php if ($user['roles_id'] == 2) {
-                        $searchkerja = urlpath('landing');
-                        echo '<a href="$searchkerja" class="p-2 bg-[#CB6062]  rounded-[4px] text-[#F8E8E0] hover:bg-[#F8E8E0] hover:text-black">Cari Pekerjaan</a>';
+
+                        echo '<a href="#" class="p-2 bg-[#CB6062]  rounded-[4px] text-[#F8E8E0] hover:bg-[#F8E8E0] hover:text-black">Cari Pekerjaan</a>';
                     }
                     ?>
                     <?php if ($user['roles_id'] == 3) {
-                        $buatkerja = urlpath('landing');
+
                         echo '<button onclick="showEditButton()" class="p-2 bg-[#CB6062]  rounded-[4px] text-[#F8E8E0] hover:bg-[#F8E8E0] hover:text-black">Buat Loker</button>';
                     }
                     ?>
@@ -178,7 +178,7 @@
 
                                         </div>
                                         <p class=" font-normal text-black  text-[14px] capitalize">Batas Lamaran : <?= htmlspecialchars($pekerjaan_item['batas']) ?></p>
-                                        <p class=" font-normal text-black  text-[14px] capitalize overflow-ellipsis"><?= htmlspecialchars($pekerjaan_item['tugas']) ?></p>
+                                        <p class=" font-normal text-black  text-[14px] h-[20px] capitalize truncate"><?= htmlspecialchars($pekerjaan_item['tugas']) ?></p>
                                         <div class="flex flex-1 justify-end">
                                             <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Pendaftar :</p>
                                         </div>
@@ -202,12 +202,15 @@
         </div>
     <?php } ?>
     <?php if ($user['roles_id'] == 3 && $perekrut['validasi'] == 'accepted') { ?>
-        <div class="flex flex-col items-center mt-4" id="main-container">
-            <div>
-                <h1 class="text-[24px] font-bold text-[#CB6062]">Selamat Datang <b><?= $perekrut['nama'] ?></b></h1>
-            </div>
-            <div class="">
-                <h1 class="text-[24px] font-bold text-[#CB6062]">List pekerjaanmu ada dibawah</b></h1>
+        <div class="flex flex-col items-center mt-16" id="main-container">
+            <div class="judul-container flex flex-col justify-start w-[1280px] px-8 mb-4">
+                <div class="">
+                    <h1 class="text-[24px] font-bold text-[#CB6062]">Selamat Datang <b><?= $perekrut['nama'] ?></b></h1>
+                </div>
+                <div class="">
+                    <h1 class="text-[24px] font-bold text-[#CB6062]">List pekerjaanmu ada dibawah</b></h1>
+                </div>
+
             </div>
             <div id="top-container" class="flex flex-row items-center">
                 <div class="bg-white py-4 px-4 text-black w-[1240px] border-2 border-black/25 flex flex-row items-center">
@@ -234,11 +237,13 @@
                             <p class="mb-2 text-gray-500">Batas pendaftaran : <?= $formattedDate ?></p>
                             <div class="flex flex-row gap-4">
                                 <p class="mb-2 text-gray-500">Jumlah lamaran : <?= $pekerjaan_item['pelamarancount'] ?></p>
-                                <a href="<?= urlpath('homepage/lihat-pelamaran?id=' . $pekerjaan_item['pekerjaan']['id'] . '') ?>" class=" items-center justify-center mb-1 text-sm font-medium text-green-500 ">Lihat</a>
+                                <a href="<?= urlpath('homepage/lihat-pelamaran?id=' . $pekerjaan_item['pekerjaan']['id'] . '') ?>" class="items-center justify-center mb-1 text-sm font-medium text-yellow-500">
+                                    <span class="text-[16px]">Lihat Data</span>
+                                </a>
                                 <button onclick="toggleDescription('user<?= $pekerjaan_item['pekerjaan']['id'] ?>')" class=" items-center justify-center mb-1 text-sm font-medium text-green-500 ">
                                     <span class="text-[16px]">Detail</span>
                                 </button>
-                                <button onclick="editPekerjaan(<?= $pekerjaan_item['pekerjaan']['id'] ?>)" class="flex items-center justify-center mb-1 text-sm font-medium text-green-500 md:justify-start">
+                                <button onclick="editPekerjaan(<?= $pekerjaan_item['pekerjaan']['id'] ?>)" class="flex items-center justify-center mb-1 text-sm font-medium text-red-500 md:justify-start">
                                     <span class="text-[16px]">Edit</span>
                                 </button>
                             </div>
@@ -254,7 +259,7 @@
                                 <?= $pekerjaan_item['pekerjaan']['deskripsi'] ?>
                             </p>
                             <span>Tugas :</span>
-                            <p class="text-sm text-gray-600">
+                            <p class="text-sm text-gray-600 ">
                                 <?= $pekerjaan_item['pekerjaan']['tugas'] ?>
                             </p>
                             <span>Waktu Kerja :</span>
@@ -423,7 +428,7 @@
                 </div>
             <?php }  ?>
 
-          
+
 
             <!-- Modal -->
             <div id="editbutton" class="fixed top-0 left-0 items-center justify-center hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
@@ -556,13 +561,19 @@
                 </div>
             </div>
         </div>
-    <?php } else { ?>
+    <?php } elseif ($user['roles_id'] == 3 && $perekrut['validasi'] == 'process') { ?>
         <div class="flex flex-col items-center justify-center">
-                <img src="src/assets/Target.png" class="w-[500px]" alt="">
-                <h1 class="text-[24px] font-bold text-[#2A2C35]">Kamu Harus Tervalidasi ! </h1>
-                <h1 class="text-[16px] font-bold text-[#2A2C35]">Tunggu validasi admin ya ! </h1>
+            <img src="src/assets/Target.png" class="w-[500px]" alt="">
+            <h1 class="text-[24px] font-bold text-[#2A2C35]">Kamu Harus Tervalidasi ! </h1>
+            <h1 class="text-[16px] font-bold text-[#2A2C35]">Tunggu validasi admin ya ! </h1>
         </div>
-        <?php } ?>
+    <?php } elseif ($user['roles_id'] == 3 && $perekrut['validasi'] == 'reject') { ?>
+        <div class="flex flex-col items-center justify-center">
+            <img src="src/assets/Target.png" class="w-[500px]" alt="">
+            <h1 class="text-[24px] font-bold text-[#2A2C35]">Kamu Harus Tervalidasi ! </h1>
+            <h1 class="text-[16px] font-bold text-[#2A2C35]">Tunggu validasi admin ya ! </h1>
+        </div>
+    <?php } ?>
 
     <script>
         function showEditButton() {
@@ -676,7 +687,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            
+
 
             const pekerjaanItems = document.querySelectorAll('.pekerjaan-item');
             const detailsContainer = document.getElementById('pekerjaan-details');
