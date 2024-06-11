@@ -49,14 +49,14 @@
 </header>
 
 <body class="font-[montserrat]">
-    <div class="flex flex-col items-center mt-4" id="main-container">
+    <div class="flex flex-col items-center my-4" id="main-container">
         <div id="content-placer" class="flex flex-col items-center mt-4">
             <h2 class="text-[24px] font-bold text-[#CB6062]">
                 Details Pekerjaan
             </h2>
             <div id="sub-content" class="flex flex-col gap-4 mt-4 w-[800px]">
-                <img src="<?= urlpath('uploads/foto_pekerjaan/' . $pekerjaandetails['foto'])  ?>" alt="">
-                <h3><?= $pekerjaandetails['nama_pekerjaan'] ?></h3>
+                <img class="object-cover h-[300px] w-[800px]" src="<?= urlpath('uploads/foto_pekerjaan/' . $pekerjaandetails['foto'])  ?>" alt="">
+                <h3 class="text-left flex text-[24px]"><?= $pekerjaandetails['nama_pekerjaan'] ?></h3>
                 <div>
                     <label for="">Deskripsi : </label>
                     <h3 class="text-left flex"><?= $pekerjaandetails['deskripsi'] ?></h3>

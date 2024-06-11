@@ -173,23 +173,23 @@
         <!-- Swiper Container -->
         <div class="relative w-[1280px]">
             <div class="swiper-container mySwiper mt-4">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper" id="tablezz" >
                     <?php foreach ($perekrut as $perekruts) { ?>
-                        <div class="swiper-slide h-[250px] relative rounded-xl border border-[#185141] p-4 bg-white shadow-lg">
+                        <div class="swiper-slide h-[250px] relative rounded-xl border border-[#185141] p-4 bg-white shadow-lg" >
                             <div class="flex flex-col items-start justify-between">
-                                
+
                                 <div>
-                                    <h1 class="text-xl font-semibold"><?= $perekruts['perekrutdetails']['nama'] ?></h1>
+                                    <h1 class="text-xl font-semibold namaperekrut"><?= $perekruts['perekrutdetails']['nama'] ?></h1>
                                     <p><?= $perekruts['kecamatan']['nama'] ?></p>
                                     <div class="flex items-center text-gray-600">
                                         <span class="star">⭐</span>
                                         <span> - <?= $perekruts['countrating'] ?> Reviews</span>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="mt-4 text-gray-700">
-                               
+
                                 <p><?= $perekruts['countpekerjaan'] ?> Jobs</p>
                             </div>
                             <a href="<?= urlpath('homepage/detail-perekrut?id=' . $perekruts['perekrut']['id']) ?>" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg">Detail Perekrut</a>
@@ -217,6 +217,22 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search_field').on('keyup', function() {
+                var searchText = $(this).val().toLowerCase();
+                $('#tablezz .swiper-slide').each(function() {
+                    var namaperekrut = $(this).find('.namaperekrut').text().toLowerCase();
+                    if (namaperekrut.includes(searchText)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
         });
     </script>
 </body>

@@ -159,18 +159,18 @@
                                                     <textarea name="alasan" id="alasan" class="border-0 px-3  placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm focus:outline-none focus:ring w-[500px] ease-linear transition-all duration-150 h-40 shadow-lg resize-none mb-4"><?= htmlspecialchars($pelamaran_item['alasan']) ?></textarea>
 
                                                     <div class="mb-[18px] relative">
-                                                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-14 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#F1F1F1] hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-500 dark:hover:bg-slate-200 2xl:h-20">
+                                                        <label for="dropzone-file<?= $pelamaran_item['id_pelamaran'] ?>" class="flex flex-col items-center justify-center w-full h-14 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#F1F1F1] hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-500 dark:hover:bg-slate-200 2xl:h-20">
                                                             <div class="flex flex-row items-center justify-center gap-2 pt-5 pb-6">
-                                                                <div id="file-name" class="flex items-center gap-2 text-gray-500 dark:text-gray-400  text-[14px]">
+                                                                <div id="file-name<?= $pelamaran_item['id_pelamaran'] ?>" class="flex items-center gap-2 text-gray-500 dark:text-gray-400  text-[14px]">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4" id="svg-upload">
                                                                         <path fillRule="evenodd" d="M11.47 2.47a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06l-3.22-3.22V16.5a.75.75 0 0 1-1.5 0V4.81L8.03 8.03a.75.75 0 0 1-1.06-1.06l4.5-4.5ZM3 15.75a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
                                                                     </svg>
-                                                                    <p id="textcontent">
-                                                                        Klik Untuk Unggah Dokumen
+                                                                    <p id="textcontent<?= $pelamaran_item['id_pelamaran'] ?>">
+                                                                        Klik Untuk Unggah Dokumen Pelamaran
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                            <input id="dropzone-file" onchange="displayFileName()" name="foto" type="file" class="hidden">
+                                                            <input id="dropzone-file<?= $pelamaran_item['id_pelamaran'] ?>" onchange="displayFileName(<?= $pelamaran_item['id_pelamaran'] ?>)" name="dokumen" type="file" accept="application/pdf" class="hidden">
                                                         </label>
                                                     </div>
                                                 </div>
@@ -264,10 +264,10 @@
             }, 500);
         }
 
-        function displayFileName() {
-            const fileInput = document.getElementById('dropzone-file');
-            const fileNameParagraph = document.getElementById('file-name');
-            const textcontent = document.getElementById('textcontent');
+        function displayFileName($id) {
+            const fileInput = document.getElementById('dropzone-file' + $id);
+            const fileNameParagraph = document.getElementById('file-name'+ $id);
+            const textcontent = document.getElementById('textcontent'+ $id);
             const svgCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                             fill="currentColor" class="w-4 h-4" id="svg-upload">
                                                             <path fillRule="evenodd"
@@ -277,7 +277,7 @@
             if (fileInput.files.length > 0) {
                 fileNameParagraph.textContent = fileInput.files[0].name;
             } else {
-                fileNameParagraph.innerHTML = svgCode + 'Klik Untuk Unggah Foto Pekerjaan';
+                fileNameParagraph.innerHTML = svgCode + 'Klik Untuk Unggah Dokumen Pelamaran';
             }
         }
     </script>

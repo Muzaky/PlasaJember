@@ -4,6 +4,16 @@ include_once 'config/connection.php';
 
 class M_Pelamaran
 {
+
+    static function getAllPelamaran(){
+        global $conn;
+        $sql = 'SELECT * FROM pelamaran';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        return $data;
+    }
     static function savePelamaran($data = [])
     {
         global $conn;

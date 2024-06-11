@@ -139,7 +139,7 @@
                     </svg>
                 </div>
                 <div class="relative w-[300px] text-gray-400 focus-within:text-gray-600 px-4">
-                    <input id="search_field" class=" w-full h-full pl-14 pr-4 py-1 rounded-md border-2 border-[#204e51] bg-[#f4f4f4]" placeholder="Lokasi" type="search">
+                    <input id="search_field2" class=" w-full h-full pl-14 pr-4 py-1 rounded-md border-2 border-[#204e51] bg-[#f4f4f4]" placeholder="Lokasi" type="search">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 absolute left-6 top-1/2 transform -translate-y-1/2">
                         <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
                     </svg>
@@ -168,9 +168,9 @@
                                 <div class="flex flex-col w-full">
                                     <div class="p-4">
                                         <a href="#">
-                                            <h5 class="mb-1 text-[20px] underline font-bold tracking-tight text-black text-wrap"><?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?></h5>
+                                            <h5 class="mb-1 text-[20px] underline font-bold tracking-tight text-black text-wrap namapekerjaan"><?= htmlspecialchars($pekerjaan_item['nama_pekerjaan']) ?></h5>
                                         </a>
-                                        <p class=" font-normal text-gray-700  text-[16px]"><?= htmlspecialchars($pekerjaan_item['alamat']) ?></p>
+                                        <p class="font-normal text-gray-700  text-[16px] alamatpekerjaan"><?= htmlspecialchars($pekerjaan_item['alamat']) ?></p>
                                         <div class="flex flex-row items-center gap-1 mt-2">
                                             <p class=" font-normal text-black  text-[14px]">Rp <?= number_format($pekerjaan_item['kompensasi'], 2, ',', '.') ?></p>
                                             <p class=" font-normal text-black  text-[14px]">per</p>
@@ -801,6 +801,36 @@
             }
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search_field').on('keyup', function() {
+                var searchText = $(this).val().toLowerCase();
+                $('#pekerjaan-list div ').each(function() {
+                    var namapekerjaan = $(this).find('.namapekerjaan').text().toLowerCase();
+                    if (namapekerjaan.includes(searchText)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+        $(document).ready(function() {
+            $('#search_field2').on('keyup', function() {
+                var searchText = $(this).val().toLowerCase();
+                $('#pekerjaan-list div ').each(function() {
+                    var alamatpekerjaan = $(this).find('.alamatpekerjaan').text().toLowerCase();
+                    if (alamatpekerjaan.includes(searchText)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>

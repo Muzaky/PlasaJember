@@ -44,7 +44,7 @@
     }
 </style>
 
-<header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center">
+<header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center ">
     <div id="logo-container" class="flex pl-8">
         <img src="../src/assets/Logo.png" alt="test" class="w-[112px]">
     </div>

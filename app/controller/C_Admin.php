@@ -9,7 +9,45 @@ include_once 'app/models/M_Rating.php';
 class C_Admin {
     
     static function dashboard() {
-        view('admin/admin_layout', ['url' => 'dashboard']);
+        if (!isset($_SESSION['user'])) {
+            header('Location: ' . BASEURL . 'login?auth=false');
+            exit;
+        }else{
+            $alldata = [];
+            $pekerja_list = M_Users::getAllUsers();
+            $perekrut_list = M_Perekrut::getAllPerekrut();
+            $pekerjaan_list = M_Pekerjaan::getAllPekerjaan();
+            $pelamaran_list = M_Pelamaran::getAllPelamaran();
+            $rating_list = M_Rating::getAllRating();
+            $alldata = [
+                'pekerja' => [
+                    'list' => $pekerja_list,
+                    'count' => count($pekerja_list)
+                ],
+                'perekrut' => [
+                    'list' => $perekrut_list,
+                    'count' => count($perekrut_list)
+                ],
+                'pekerjaan' => [
+                    'list' => $pekerjaan_list,
+                    'count' => count($pekerjaan_list)
+                ],
+                'pelamaran' => [
+                    'list' => $pelamaran_list,
+                    'count' => count($pelamaran_list)
+                ],
+                'rating' => [
+                    'list' => $rating_list,
+                    'count' => count($rating_list)
+                ]
+            ];
+            
+
+            $_SESSION['data'] = $alldata;
+
+            view('admin/admin_layout', ['url' => 'dashboard', 'user' => $_SESSION['user'], 'data' => $_SESSION['data']]);
+        }
+
     }
 
    

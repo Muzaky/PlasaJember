@@ -58,6 +58,21 @@
         border-radius: 10px;
     }
 
+    .custom-select {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.25;
+        border-radius: 0.375rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        transition: all 0.15s ease-in-out;
+        margin-bottom: 1rem;
+    }
+
+    .custom-select:focus {
+        outline: none;
+        ring: 2px;
+    }
+
     html {
         scroll-behavior: smooth;
     }
@@ -66,7 +81,10 @@
 
 <header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center">
     <div id="logo-container" class="flex pl-8">
-        <img src="src/assets/Logo.png" alt="test" class="w-[112px]">
+        <a href="<?= urlpath('') ?>">
+
+            <img src="src/assets/Logo.png" alt="test" class="w-[112px]">
+        </a>
     </div>
 </header>
 
@@ -85,11 +103,11 @@
             <div class="flex justify-center pt-[80px]">
                 <form action="<?= urlpath('login') ?>" class="flex flex-col mt-[24px] gap-8" id="login-form" method="post">
                     <div class="inputbox">
-                        <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="email">
+                        <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent border-1 border-[#F8E8E0] focus:ring-[#F8E8E0] focus:border-[#F8E8E0]  custom-select" required="required" name="email">
                         <span>Masukkan Email</span>
                     </div>
                     <div class="inputbox">
-                        <input type="password" class="h-[42px] rounded-[8px] px-2 bg-transparent border-2 focus:ring-[#F8E8E0] focus:outline-none" required="required" name="password">
+                        <input type="password" class="h-[42px] rounded-[8px] px-2 bg-transparent border-1 border-[#F8E8E0] focus:ring-[#F8E8E0] focus:border-[#F8E8E0] custom-select" required="required" name="password">
                         <span>Kata Sandi</span>
                     </div>
                 </form>

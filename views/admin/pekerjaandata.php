@@ -17,11 +17,11 @@
         ring: 2px;
     }
 </style>
-<div class="h-screen flex overflow-hidden">
+<div class="h-screen flex overflow-hidden font-[montserrat]">
     <!-- Sidebar -->
-    <div class="flex flex-col bg-transparent 0 w-80">
+    <div class="flex flex-col  w-80 ">
         <div class="flex justify-center items-center">
-            <img class="w-[180px] h-[86px] mt-[32px] mb-[88px]" src="../src/assets/Logo.png" alt="logobibitani">
+            <img class="w-[180px] h-[86px] mt-[64px] mb-[88px]" src="../src/assets/Logo.png" alt="logobibitani">
         </div>
 
         <div class="flex justify-center">
@@ -65,8 +65,8 @@
                 </li>
                 <li>
                     <a href="<?= urlpath('logout') ?>" class="text-gray-800 hover:bg-gray-800 hover:text-white  px-4 py-2 rounded-md text-sm font-medium flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.496 21H6.5c-1.105 0-2-1.151-2-2.571V5.57c0-1.419.895-2.57 2-2.57h7M16 15.5l3.5-3.5L16 8.5m-6.5 3.496h10" />
                         </svg>
 
                         <span>Logout</span>
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Content area -->
-    <div class="flex flex-col w-0 flex-1 overflow-hidden bg-[#F8E8E0] bg-opacity-5 items-center">
+    <div class="flex flex-col w-0 flex-1 overflow-hidden bg-slate-200 items-center">
         <!-- Top bar -->
         <div class="flex h-[44px] justify-center items-center content-center mt-[63px]">
             <!-- Top bar content -->
@@ -98,9 +98,7 @@
         <div class="flex-1 relative z-0 overflow-y-auto focus:outline-none w-[1400px] justify-center" tabindex="0">
             <!-- Your content goes here -->
 
-            <div>
-                 <h1 class="text-[#204E51] font-bold text-3xl mt-6 mb-6">Data Pekerjaan</h1>
-             </div>
+            <h1 class="text-[24px] ml-4">Admin Dashboard Page</h1>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -204,8 +202,8 @@
                                         } ?>
                                     </p>
                                     <span>Kontak :</span>
-                            <p class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['email'] ?></p>
-                            <p class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['telp'] ?></p>
+                                    <p class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['email'] ?></p>
+                                    <p class="text-sm text-gray-600"><?= $pekerjaan_item['pekerjaan']['telp'] ?></p>
 
                                 </td>
                             </tr>

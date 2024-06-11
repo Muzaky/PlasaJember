@@ -3,6 +3,15 @@ include_once 'config/connection.php';
 
 class M_Rating{
 
+    static function getAllRating(){
+        global $conn;
+        $sql = 'SELECT * FROM rating';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        return $data;
+    }
     static function saveRating($data = []){
 
         global $conn;
