@@ -87,10 +87,10 @@ class C_Auth
             session_regenerate_id(true);
             $_SESSION['user'] = $users;
             if ($users['roles_id'] == 1) {
-                $_SESSION['active'] = true;
+                
                 header('Location: ' . BASEURL . 'dashboard');
             } else {
-                $_SESSION['active'] = true;
+                
                 header('Location: ' . BASEURL . 'homepage');
             }
         } else {

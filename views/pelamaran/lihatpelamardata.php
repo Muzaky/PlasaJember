@@ -121,13 +121,14 @@
     </div>
 </header>
 
-<body>
+<body class="font-[montserrat]">
     <div class="flex flex-col justify-center items-center mt-16">
-        <h1 class="text-[24px] font-bold text-[#2A2C35]">Berikut list pelamar loker anda</h1>
+        
+        <h1 class="text-[24px] justify-start flex w-[1280px] mb-8 pl-4">Berikut data pelamaran lowongan kerja anda</h1>
         <div class="mt-4 relative w-[1280px] overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 max-h-[400px] overflow-y-auto mb-[64px]">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
+                    <tr class="">
                         <th scope="col" class="px-6 py-3">
                             No
                         </th>
@@ -143,7 +144,177 @@
                         <th scope="col" class="px-6 py-3">
                             Dokumen
                         </th>
+                        <th scope="col" class="px-6 py-3 justify-center text-center">
+                            Status
+                        </th>
+                        <th scope="col" class="px-6 py-3 justify-center flex">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    $hasProcessStatus = false;
+
+                    foreach ($pelamaran as $pelamaran_item) {
+                        foreach ($pelamaran_item['pelamaran'] as $sub_item) {
+                            if ($sub_item['pelamaran']['status'] == 'process') {
+
+                    ?>
+                                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <?= $no ?>
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <?= $sub_item['users']['nama'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $sub_item['users']['email'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $sub_item['users']['phone'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <a href="<?= urlpath('uploads/dokumen_pelamaran/' . htmlspecialchars($sub_item['pelamaran']['dokumen'])) ?>"><?= $sub_item['pelamaran']['dokumen'] ?></a>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?php if ($sub_item['pelamaran']['status'] == 'accepted') { ?>
+                                            <div class="text-green-500 p-2  rounded-full text-center bg-green-100">Accepted</div>
+                                        <?php } elseif ($sub_item['pelamaran']['status'] == 'rejected') { ?>
+                                            <div class="text-red-500 p-2  rounded-full text-center bg-red-100">Rejected</div>
+                                        <?php } else { ?>
+                                            <div class="text-yellow-500 p-2 rounded-full text-center bg-yellow-100">Process</div>
+                                        <?php } ?>
+                                    </td>
+                                    <td class="px-6 py-4 text-center items-center">
+                                        <button onclick="toggleDescription(<?= $sub_item['pelamaran']['id'] ?>)" class="font-medium text-blue-600  hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="m12 15l-4.243-4.242l1.415-1.414L12 12.172l2.828-2.828l1.415 1.414L12 15.001Z" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="editpekerja(<?= $sub_item['pelamaran']['id'] ?>)" class="font-medium text-green-600 hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                                                <path fill="none" stroke="currentColor" stroke-linecap="round" d="M11.5 8.5v-4m-5 10v4m10-2v2m-5 0v-6m-5-8v6m10-6v8m-7-4h4m-9 6h4m6 2h4" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="showDelButton(<?= $sub_item['pelamaran']['id'] ?>)" class="text-red-500 hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 20 20">
+                                                <path fill="currentColor" d="M12 4h3c.6 0 1 .4 1 1v1H3V5c0-.6.5-1 1-1h3c.2-1.1 1.3-2 2.5-2s2.3.9 2.5 2zM8 4h3c-.2-.6-.9-1-1.5-1S8.2 3.4 8 4zM4 7h11l-.9 10.1c0 .5-.5.9-1 .9H5.9c-.5 0-.9-.4-1-.9L4 7z" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="user<?= $sub_item['pelamaran']['id'] ?>Description" class="hidden py-4 px-4 border-t border-gray-200">
+                                    <td colspan="6" class="p-8">
+                                        <h4 class="font-medium text-base text-[#CB6062] underline mb-2"><?= $sub_item['users']['nama'] ?></h4>
+                                        <span>Email : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $sub_item['users']['email'] ?>
+                                        </p>
+                                        <span>Alamat : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $sub_item['users']['alamat'] ?>, <?= $sub_item['kecamatan']['nama'] ?>
+                                        </p>
+                                        <span>Jenis kelamin : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?php if ($sub_item['users']['gender'] == 'L') {
+                                                echo 'Laki-laki';
+                                            } else {
+                                                echo 'Perempuan';
+                                            } ?>
+                                        </p>
+                                        <span>No Telp : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $sub_item['users']['phone'] ?>
+                                        </p>
+                                        <span>Alasan melamar :</span>
+                                        <p class="text-sm text-gray-600"></p>
+                                        <?= $sub_item['pelamaran']['alasan'] ?>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <div id="editbutton<?= $sub_item['pelamaran']['id'] ?>" class="fixed top-0 left-0 items-center justify-center flex hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
+                                    <div class="relative flex flex-col items-center justify-center p-4 mb-6 break-words bg-white border-0 rounded-lg shadow-lg bg-blueGray-100">
+
+                                        <button onclick="hideeditpekerja(<?= $sub_item['pelamaran']['id'] ?>)" class="absolute left-[20px] top-[20px] flex items-center text-black text-sm font-medium">
+                                            <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                                                </path>
+                                            </svg>
+                                            Back
+                                        </button>
+
+                                        <div class="flex flex-col px-4 py-4 pt-0 justify-center items-center ">
+                                            <form class="flex flex-col items-center justify-center" action="<?= urlpath('pelamaran/updatepelamaran2') ?>" method="POST" enctype="multipart/form-data" id="editformpekerja<?= $sub_item['pelamaran']['id'] ?>">
+                                                <h6 class="flex justify-center mt-3 mb-6 text-sm font-bold uppercase text-[#204E51]">
+                                                    Form Acc Pekerja
+                                                </h6>
+
+                                                <div class="flex flex-col justify-center items-center">
+                                                    <input type="hidden" name="id" value="<?= $sub_item['pelamaran']['id'] ?>">
+                                                    <input type="hidden" name="alasan" value="<?= $sub_item['pelamaran']['alasan'] ?>">
+                                                    <div class="flex flex-row gap-10">
+                                                        <div class="flex flex-row items-center justify-center gap-6">
+                                                            <div class="flex flex-col items-center justify-center">
+                                                                <label for="Rejected" class="block mb-2 text-sm font-medium text-gray-900">Tolak</label>
+                                                                <input type="radio" name="status" id="Rejected" value='rejected' class="bg-gray-50 border border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-2.5">
+                                                            </div>
+                                                            <div class="flex flex-col items-center justify-center">
+                                                                <label for="Validated" class="block mb-2 text-sm font-medium text-gray-900">Terima</label>
+                                                                <input type="radio" name="status" id="Validated" value='accepted' class="bg-gray-50 border border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label for="catatan" class="mt-4 text-gray-900">Catatan:</label>
+                                                <div class="flex flex-col items-center justify-center mt-4 ">
+                                                    <textarea name="catatan" id="" class="w-[500px] h-[300px] custom-select resize-none"></textarea>
+                                                </div>
+
+
+                                                <button type="submit" class="flex w-full justify-center rounded-[12px] bg-[#204E51] opacity-70 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#37251b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#76f51] mt-8">
+                                                    Simpan
+                                                </button>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                    <?php
+                                $no++;
+                                $hasProcessStatus = true;
+                            }
+                        }
+                    }
+
+                    if (!$hasProcessStatus) {
+                        echo '<tr><td colspan="7" class="text-center py-3">Belum ada pelamaran baru</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <h1 class="text-[24px] justify-start flex w-[1280px] mb-8 pl-4">Data yang sudah diproses</h1>
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 max-h-[400px] overflow-y-auto">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr class="">
                         <th scope="col" class="px-6 py-3">
+                            No
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Nama Pekerja
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Email
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            No Telp
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Dokumen
+                        </th>
+                        <th scope="col" class="px-6 py-3 justify-center text-center">
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 justify-center flex">
@@ -154,118 +325,132 @@
                 <tbody>
                     <?php $no = 1;
                     foreach ($pelamaran as $pelamaran_item) { ?>
-                        <?php foreach ($pelamaran_item['pelamaran'] as $sub_item) { ?>
-                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <?= $no ?>
-                                </th>
-                                <td class="px-6 py-4">
-                                    <?= $sub_item['users']['nama'] ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?= $sub_item['users']['email'] ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?= $sub_item['users']['phone'] ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <a href="<?= urlpath('uploads/dokumen_pelamaran/' . htmlspecialchars($sub_item['pelamaran']['dokumen'])) ?>"><?= $sub_item['pelamaran']['dokumen'] ?></a>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?= $sub_item['pelamaran']['status'] ?>
-                                </td>
-                                <td class="px-6 py-4 flex justify-center">
-                                    <button onclick="toggleDescription(<?= $sub_item['pelamaran']['id'] ?>)" class="font-medium text-blue-600  hover:underline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="m12 15l-4.243-4.242l1.415-1.414L12 12.172l2.828-2.828l1.415 1.414L12 15.001Z" />
-                                        </svg></button>
-                                    <button onclick="editpekerja(<?= $sub_item['pelamaran']['id'] ?>)" class="font-medium text-green-600 hover:underline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                            <path fill="none" stroke="currentColor" stroke-linecap="round" d="M11.5 8.5v-4m-5 10v4m10-2v2m-5 0v-6m-5-8v6m10-6v8m-7-4h4m-9 6h4m6 2h4" />
-                                        </svg></button>
-                                    <button onclick="showDelButton(<?= $sub_item['pelamaran']['id'] ?>)" class="text-red-500 hover:underline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 20 20">
-                                            <path fill="currentColor" d="M12 4h3c.6 0 1 .4 1 1v1H3V5c0-.6.5-1 1-1h3c.2-1.1 1.3-2 2.5-2s2.3.9 2.5 2zM8 4h3c-.2-.6-.9-1-1.5-1S8.2 3.4 8 4zM4 7h11l-.9 10.1c0 .5-.5.9-1 .9H5.9c-.5 0-.9-.4-1-.9L4 7z" />
-                                        </svg>
-
-                                </td>
-
-
-                            </tr>
-                            <tr id="user<?= $sub_item['pelamaran']['id'] ?>Description" class="hidden py-4 px-4 border-t border-gray-200">
-                                <td colspan="6" class="p-8">
-                                    <h4 class="font-medium text-base text-[#CB6062] underline mb-2"><?= $sub_item['users']['nama'] ?></h4>
-                                    <span>Email : </span>
-                                    <p class="text-sm text-gray-600">
+                        <?php foreach ($pelamaran_item['pelamaran'] as $sub_item) {
+                            if ($sub_item['pelamaran']['status'] != 'process') { ?>
+                                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <?= $no ?>
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <?= $sub_item['users']['nama'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
                                         <?= $sub_item['users']['email'] ?>
-                                    </p>
-                                    <span>Alamat : </span>
-                                    <p class="text-sm text-gray-600">
-                                        <?= $sub_item['users']['alamat'] ?>, <?= $sub_item['kecamatan']['nama'] ?>
-                                    </p>
-                                    <span>Jenis kelamin : </span>
-                                    <p class="text-sm text-gray-600">
-                                        <?php if ($sub_item['users']['gender'] == 'L') {
-                                            echo 'Laki-laki';
-                                        } else {
-                                            echo 'Perempuan';
-                                        } ?>
-                                    </p>
-                                    <span>No Telp : </span>
-                                    <p class="text-sm text-gray-600">
+                                    </td>
+                                    <td class="px-6 py-4">
                                         <?= $sub_item['users']['phone'] ?>
-                                    </p>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <a href="<?= urlpath('uploads/dokumen_pelamaran/' . htmlspecialchars($sub_item['pelamaran']['dokumen'])) ?>"><?= $sub_item['pelamaran']['dokumen'] ?></a>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?php if ($sub_item['pelamaran']['status'] == 'accepted') { ?>
+                                            <div class="text-green-500 p-2  rounded-full text-center bg-green-100">Accepted</div>
+                                        <?php } elseif ($sub_item['pelamaran']['status'] == 'rejected') { ?>
+                                            <div class="text-red-500 p-2  rounded-full text-center bg-red-100">Rejected</div>
+                                        <?php } else { ?>
+                                            <div class="text-yellow-500 p-2 rounded-full text-center bg-yellow-100">Process</div>
+                                        <?php } ?>
+                                    </td>
+                                    <td class="px-6 py-4 text-center items-center">
+                                        <button onclick="toggleDescription(<?= $sub_item['pelamaran']['id'] ?>)" class="font-medium text-blue-600  hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                                                <path fill="currentColor" d="m12 15l-4.243-4.242l1.415-1.414L12 12.172l2.828-2.828l1.415 1.414L12 15.001Z" />
+                                            </svg></button>
+                                        <button onclick="editpekerja(<?= $sub_item['pelamaran']['id'] ?>)" class="font-medium text-green-600 hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                                                <path fill="none" stroke="currentColor" stroke-linecap="round" d="M11.5 8.5v-4m-5 10v4m10-2v2m-5 0v-6m-5-8v6m10-6v8m-7-4h4m-9 6h4m6 2h4" />
+                                            </svg></button>
+                                        <button onclick="showDelButton(<?= $sub_item['pelamaran']['id'] ?>)" class="text-red-500 hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 20 20">
+                                                <path fill="currentColor" d="M12 4h3c.6 0 1 .4 1 1v1H3V5c0-.6.5-1 1-1h3c.2-1.1 1.3-2 2.5-2s2.3.9 2.5 2zM8 4h3c-.2-.6-.9-1-1.5-1S8.2 3.4 8 4zM4 7h11l-.9 10.1c0 .5-.5.9-1 .9H5.9c-.5 0-.9-.4-1-.9L4 7z" />
+                                            </svg>
 
-                                </td>
-                            </tr>
-                            <div id="editbutton<?= $sub_item['pelamaran']['id'] ?>" class="fixed top-0 left-0 items-center justify-center flex hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
-                                <div class="relative flex flex-col items-center justify-center w-[300px] h-[300px] mb-6 break-words bg-white border-0 rounded-lg shadow-lg bg-blueGray-100">
+                                    </td>
 
-                                    <button onclick="hideeditpekerja(<?= $sub_item['pelamaran']['id'] ?>)" class="absolute left-[20px] top-[20px] flex items-center text-black text-sm font-medium">
-                                        <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                                            </path>
-                                        </svg>
-                                        Back
-                                    </button>
 
-                                    <div class="flex flex-col px-4 py-4 pt-0 justify-center items-center ">
-                                        <form class="flex flex-col items-center justify-center" action="<?= urlpath('pelamaran/updatepelamaran2') ?>" method="POST" enctype="multipart/form-data" id="editformpekerja<?= $sub_item['pelamaran']['id'] ?>">
-                                            <h6 class="flex justify-center mt-3 mb-6 text-sm font-bold uppercase text-[#204E51]">
-                                                Form Acc Pekerja
-                                            </h6>
+                                </tr>
+                                <tr id="user<?= $sub_item['pelamaran']['id'] ?>Description" class="hidden py-4 px-4 border-t border-gray-200">
+                                    <td colspan="6" class="p-8">
+                                        <h4 class="font-medium text-base text-[#CB6062] underline mb-2"><?= $sub_item['users']['nama'] ?></h4>
+                                        <span>Email : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $sub_item['users']['email'] ?>
+                                        </p>
+                                        <span>Alamat : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $sub_item['users']['alamat'] ?>, <?= $sub_item['kecamatan']['nama'] ?>
+                                        </p>
+                                        <span>Jenis kelamin : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?php if ($sub_item['users']['gender'] == 'L') {
+                                                echo 'Laki-laki';
+                                            } else {
+                                                echo 'Perempuan';
+                                            } ?>
+                                        </p>
+                                        <span>No Telp : </span>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $sub_item['users']['phone'] ?>
+                                        </p>
+                                        <span>Alasan melamar :</span>
+                                        <p class="text-sm text-gray-600"></p>
+                                        <?= $sub_item['pelamaran']['alasan'] ?>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <div id="editbutton<?= $sub_item['pelamaran']['id'] ?>" class="fixed top-0 left-0 items-center justify-center flex hidden w-screen h-screen transition-opacity duration-500 bg-black opacity-0 bg-opacity-40">
+                                    <div class="relative flex flex-col items-center justify-center p-4 mb-6 break-words bg-white border-0 rounded-lg shadow-lg bg-blueGray-100">
 
-                                            <div class="flex flex-col justify-center items-center">
-                                                <input type="hidden" name="id" value="<?= $sub_item['pelamaran']['id'] ?>">
-                                                <input type="hidden" name="alasan" value="<?= $sub_item['pelamaran']['alasan'] ?>">
-                                                <div class="flex flex-row gap-10">
-                                                    <div class="flex flex-row items-center justify-center gap-6">
-                                                        <div class="flex flex-col items-center justify-center">
-                                                            <label for="Rejected" class="block mb-2 text-sm font-medium text-gray-900">Tolak</label>
-                                                            <input type="radio" name="status" id="Rejected" value='rejected' class="bg-gray-50 border border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-2.5">
+                                        <button onclick="hideeditpekerja(<?= $sub_item['pelamaran']['id'] ?>)" class="absolute left-[20px] top-[20px] flex items-center text-black text-sm font-medium">
+                                            <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                                                </path>
+                                            </svg>
+                                            Back
+                                        </button>
+
+                                        <div class="flex flex-col px-4 py-4 pt-0 justify-center items-center ">
+                                            <form class="flex flex-col items-center justify-center" action="<?= urlpath('pelamaran/updatepelamaran2') ?>" method="POST" enctype="multipart/form-data" id="editformpekerja<?= $sub_item['pelamaran']['id'] ?>">
+                                                <h6 class="flex justify-center mt-3 mb-6 text-sm font-bold uppercase text-[#204E51]">
+                                                    Form Acc Pekerja
+                                                </h6>
+
+                                                <div class="flex flex-col justify-center items-center">
+                                                    <input type="hidden" name="id" value="<?= $sub_item['pelamaran']['id'] ?>">
+                                                    <input type="hidden" name="alasan" value="<?= $sub_item['pelamaran']['alasan'] ?>">
+                                                    <div class="flex flex-row gap-10">
+                                                        <div class="flex flex-row items-center justify-center gap-6">
+                                                            <div class="flex flex-col items-center justify-center">
+                                                                <label for="Rejected" class="block mb-2 text-sm font-medium text-gray-900">Tolak</label>
+                                                                <input type="radio" name="status" id="Rejected" value='rejected' class="bg-gray-50 border border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block p-2.5">
+                                                            </div>
+                                                            <div class="flex flex-col items-center justify-center">
+                                                                <label for="Validated" class="block mb-2 text-sm font-medium text-gray-900">Terima</label>
+                                                                <input type="radio" name="status" id="Validated" value='accepted' class="bg-gray-50 border border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5">
+                                                            </div>
                                                         </div>
-                                                        <div class="flex flex-col items-center justify-center">
-                                                            <label for="Validated" class="block mb-2 text-sm font-medium text-gray-900">Terima</label>
-                                                            <input type="radio" name="status" id="Validated" value='accepted' class="bg-gray-50 border border-gray-500 text-gray-900 sm:text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block p-2.5">
-                                                        </div>
-
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <label for="catatan" class="mt-4 text-gray-900">Catatan:</label>
+                                                <div class="flex flex-col items-center justify-center mt-4 ">
+                                                    <textarea name="catatan" id="" class="w-[500px] h-[300px] custom-select resize-none"></textarea>
+                                                </div>
 
 
-                                            <button type="submit" class="flex w-full justify-center rounded-[12px] bg-[#204E51] opacity-70 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#37251b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#76f51] mt-8">
-                                                Simpan
-                                            </button>
-                                        </form>
+                                                <button type="submit" class="flex w-full justify-center rounded-[12px] bg-[#204E51] opacity-70 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#37251b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#76f51] mt-8">
+                                                    Simpan
+                                                </button>
+                                            </form>
 
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        <?php $no++;
-                        } ?>
+                            <?php $no++;
+                            } ?>
+                        <?php } ?>
                     <?php  } ?>
                 </tbody>
             </table>

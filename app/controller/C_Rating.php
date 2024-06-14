@@ -33,6 +33,7 @@ class C_Rating {
                 'review' => $_POST['review'],
             ];
             if (M_Rating::saveRating($data)) {
+                $_SESSION['status'] = 'Berhasil memberikan rating dan review!';
                 header('Location: ' . BASEURL . 'homepage/list-perekrut');
                 exit;
             } else {

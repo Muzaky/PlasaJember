@@ -95,10 +95,37 @@
             </div>
         </div>
 
+        <?php if (isset($_SESSION['status'])) {
+        ?>
+            <div class="flex w-screen items-center justify-center">
+                <div id="alert" class="flex absolute shadow-xl items-center top-0 right-24 justify-center p-4 mt-24 bg-slate-400 text-white rounded-lg z-50" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div class="ms-3 text-sm font-medium">
+                        <?php echo $_SESSION['status']; ?>
+                    </div>
+                    <button type="button" class="ml-4 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        <?php
+            unset($_SESSION['status']);
+        }
+        ?>
+
         <!-- Main content area -->
         <div class="flex-1 relative z-0 overflow-y-auto focus:outline-none w-[1400px] justify-center" tabindex="0">
             <!-- Your content goes here -->
-            <h1 class="text-[24px] ml-4">Admin Dashboard Page</h1>
+            <h1 class="text-[24px] ml-4 mb-4">Data Pekerja</h1>
+         
+
+            
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -160,7 +187,7 @@
 
 
                             </tr>
-                            <tr id="user<?= $pekerja_item['pekerja']['id'] ?>Description" class="hidden py-4 px-4 border-t border-gray-200">
+                            <tr id="user<?= $pekerja_item['pekerja']['id'] ?>Description" class="hidden py-4 px-4 border-t border-gray-200 bg-slate-100">
                                 <td colspan="6" class="p-8">
                                     <h4 class="font-medium text-base text-[#CB6062] underline mb-2"><?= $pekerja_item['pekerja']['nama'] ?></h4>
                                     <span>Email : </span>
@@ -278,7 +305,7 @@
         // const toggleIcon = document.getElementById(`${userId}Toggle`).querySelector('svg');
         console.log('text');
         if (activeDescriptionId !== null && activeDescriptionId !== userId) {
-            const activeDescriptionRow = document.getElementById(`${activeDescriptionId}Description`);
+            const activeDescriptionRow = document.getElementById(`user${activeDescriptionId}Description`);
             // const activeToggleIcon = document.getElementById(`${activeDescriptionId}Toggle`).querySelector('svg');
             activeDescriptionRow.classList.add('hidden');
             // activeToggleIcon.classList.remove('flipped-icon');

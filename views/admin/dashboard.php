@@ -79,7 +79,7 @@
         <!-- Main content area -->
         <div class="flex-1 relative z-0 overflow-y-auto focus:outline-none w-[1400px] justify-center" tabindex="0">
             <!-- Your content goes here -->
-            <?= isset($_SESSION['active']) ?>
+           
 
             <div class="flex-1 p-6 mb-8">
                 <h1 class="text-[24px] flex justify-center mb-4">Admin Dashboard Page</h1>

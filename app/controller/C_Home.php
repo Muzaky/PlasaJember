@@ -85,6 +85,7 @@ class C_Home
                     'rating' => $rating,
                 ];
             }
+            
             $_SESSION['perekrut'] = $alldata;
        
 
@@ -103,6 +104,8 @@ class C_Home
                 $pekerja = M_Users::getUsersbyId($_SESSION['user']['id']);
                 $_SESSION['pekerja'] = $pekerja;
                 $perekrut_list = M_Perekrut::getPerekrutbyid2($id);
+                $rating = M_Rating::getRatingByid($perekrut_list[0]['id']);
+               
                 $alldata = [];
                 foreach ($perekrut_list as $perekrut) {
                     $pekerjaan_list = M_Pekerjaan::getPekerjaanByid($perekrut['id']);
@@ -116,8 +119,9 @@ class C_Home
                     ];
                 }
                 $_SESSION['perekrut'] = $alldata;
+                $_SESSION['rating'] = $rating;
 
-                view('homepage/homepage_layout', ['url' => 'detail-perekrut', 'user' => $_SESSION['user'], 'perekrut' => $_SESSION['perekrut'], 'pekerja' => $_SESSION['pekerja']]);
+                view('homepage/homepage_layout', ['url' => 'detail-perekrut', 'user' => $_SESSION['user'], 'perekrut' => $_SESSION['perekrut'], 'pekerja' => $_SESSION['pekerja'], 'rating' => $_SESSION['rating']]);
             }
         }
     }

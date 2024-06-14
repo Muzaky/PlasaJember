@@ -40,6 +40,15 @@
         ring: 2px;
     }
 
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #CB6062;
+        border-radius: 10px;
+    }
+
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -55,10 +64,9 @@
         <?php if ($user['roles_id'] == 2) {
             $list_perekrut = urlpath('homepage/list-perekrut'); // Correct path
             $homepage = urlpath('homepage');
-            $historypelamaran = urlpath('pelamaran/historypelamaran');
+
             echo '<a href="' . $homepage . '" class="">Cari Lowongan</a>';
             echo '<a href="' . $list_perekrut . '" class="">List Perekrut</a>';
-            echo '<a href="' . $historypelamaran . '" class="">History Pelamaran</a>';
         } ?>
 
 
@@ -109,7 +117,9 @@
             </div>
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                    <?php if ($user['roles_id'] == 2) { ?>
+                        <a href="<?= urlpath('pelamaran/historypelamaran') ?>" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">History</a>
+                    <?php } ?>
                 </li>
 
             </ul>
@@ -125,11 +135,12 @@
 
     <?php if ($user['roles_id'] == 2) { ?>
         <div class="flex flex-col items-center mt-4" id="main-container">
+
             <div>
                 <h1 class="text-[24px] font-bold text-[#CB6062]">Selamat Datang <b><?= $pekerja['nama'] ?></b></h1>
             </div>
             <div class="">
-                <h1 class="text-[24px] font-bold text-[#CB6062]">Cari Pekerjaan yang cocok untukmu di pada list pekerjaan dibawah ya !</b></h1>
+                <h1 class="text-[24px] font-bold text-[#CB6062]">Cari posisi pekerjaan yang cocok untukmu di pada list pekerjaan dibawah ya !</b></h1>
             </div>
             <div id="top-container" class="flex flex-row items-center">
                 <div class="relative w-[300px] text-gray-400 focus-within:text-gray-600 px-4">
@@ -177,7 +188,11 @@
                                             <p class=" font-normal text-black   text-[14px] capitalize"><?= htmlspecialchars($pekerjaan_item['per']) ?></p>
 
                                         </div>
-                                        <p class=" font-normal text-black  text-[14px] capitalize">Batas Lamaran : <?= htmlspecialchars($pekerjaan_item['batas']) ?></p>
+                                        <?php $date = new DateTime($pekerjaan_item['batas']);
+                                        $formattedDate = $date->format('d F Y');
+                                        ?>
+
+                                        <p class=" font-normal text-black  text-[14px] capitalize">Batas Lamaran : <?= $formattedDate ?></p>
                                         <p class=" font-normal text-black  text-[14px] h-[20px] capitalize truncate"><?= htmlspecialchars($pekerjaan_item['tugas']) ?></p>
                                         <div class="flex flex-1 justify-end">
                                             <p class=" font-normal text-gray-400 dark:text-gray-400 text-[12px]">Pendaftar :</p>
@@ -203,6 +218,29 @@
     <?php } ?>
     <?php if ($user['roles_id'] == 3 && $perekrut['validasi'] == 'accepted') { ?>
         <div class="flex flex-col items-center mt-16" id="main-container">
+            <?php if (isset($_SESSION['status'])) {
+            ?>
+                <div class="flex w-screen items-center justify-center">
+                    <div id="alert" class="flex absolute shadow-xl items-center top-0 right-24 justify-center p-4 mt-24 bg-slate-400 text-white rounded-lg z-50" role="alert">
+                        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div class="ms-3 text-sm font-medium">
+                            <?php echo $_SESSION['status']; ?>
+                        </div>
+                        <button type="button" class="ml-4 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            <?php
+                unset($_SESSION['status']);
+            }
+            ?>
             <div class="judul-container flex flex-col justify-start w-[1280px] px-8 mb-4">
                 <div class="">
                     <h1 class="text-[24px] font-bold text-[#CB6062]">Selamat Datang <b><?= $perekrut['nama'] ?></b></h1>
@@ -235,8 +273,8 @@
                             $formattedDate = $date->format('d F Y');
                             ?>
                             <p class="mb-2 text-gray-500">Batas pendaftaran : <?= $formattedDate ?></p>
-                            <div class="flex flex-row gap-4">
-                                <p class="mb-2 text-gray-500">Jumlah lamaran : <?= $pekerjaan_item['pelamarancount'] ?></p>
+                            <div class="flex flex-row gap-4 items-center">
+                                <p class="mb-1 text-gray-500">Jumlah lamaran : <?= $pekerjaan_item['pelamarancount'] ?></p>
                                 <a href="<?= urlpath('homepage/lihat-pelamaran?id=' . $pekerjaan_item['pekerjaan']['id'] . '') ?>" class="items-center justify-center mb-1 text-sm font-medium text-yellow-500">
                                     <span class="text-[16px]">Lihat Data</span>
                                 </a>

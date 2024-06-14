@@ -44,7 +44,7 @@ class C_Admin {
             
 
             $_SESSION['data'] = $alldata;
-
+            $_SESSION['active'] = 'Selamat datang di dashboard admin';
             view('admin/admin_layout', ['url' => 'dashboard', 'user' => $_SESSION['user'], 'data' => $_SESSION['data']]);
         }
 
@@ -102,6 +102,7 @@ class C_Admin {
                 'email' => $_POST['email'],
                 'phone' => $_POST['phone'],
             ];
+            $_SESSION['status'] = 'Berhasil memperbarui data';
             M_Users::updateUsers($data);
             header('Location: ' . BASEURL . 'dashboard/pekerja_list');
             exit;
@@ -159,6 +160,7 @@ class C_Admin {
                 'phone' => $_POST['phone'],
                 'validasi' => $_POST['validasi'],
             ];
+            $_SESSION['status'] = 'Berhasil memperbarui data';
             M_Perekrut::updatePerekrut($data);
             header('Location: ' . BASEURL . 'dashboard/perekrut_list');
             exit;
@@ -210,6 +212,7 @@ class C_Admin {
                 'email' => $_POST['email'],
                 'telp' => $_POST['telp'],
             ];
+            $_SESSION['status'] = 'Berhasil memperbarui data';
             M_Pekerjaan::updatePekerjaan($data);
             header('Location: ' . BASEURL . 'dashboard/pekerjaan_list');
             exit;

@@ -118,71 +118,82 @@
     </div>
 </header>
 
-<div class="bg-gray-100 h-screen flex justify-center items-center p-6">
-    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <!-- Header Section -->
-        <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                
-                <div>
-                    <h1 class="text-2xl font-semibold"><?= $perekrut[0]['perekrut']['nama'] ?></h1>
-                    <div class="flex items-center">
-                        <span class="text-gray-600">(blum ada rating total rating from 0 reviews)</span>
+<body class="bg-gray-100">
+
+    <div class="bg-gray-100 flex justify-center items-center p-6 m-[100px]">
+        <div class="w-[800px] mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <!-- Header Section -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+
+                    <div>
+                        <h1 class="text-2xl font-semibold"><?= $perekrut[0]['perekrut']['nama'] ?></h1>
+                        <div class="flex items-center">
+                            <span class="text-gray-600">
+                                <?php $avgrating = 0;
+                                foreach ($rating as $ratings) {
+                                    $avgrating += $ratings['rating'];
+                                }
+                                echo round($avgrating / count($rating), 1);
+                                ?>
+                                dari total <?php $countrating = count($rating);
+                                echo $countrating; ?>
+                                Reviews
+                            </span>
+                        </div>
                     </div>
                 </div>
+                <button id="writeReviewButton" class="bg-[#CB6062] text-white py-2 px-4 rounded-lg">Write a review</button>
             </div>
-            <button id="writeReviewButton" class="bg-[#CB6062] text-white py-2 px-4 rounded-lg">Write a review</button>
-        </div>
 
-        <!-- Navigation Tabs -->
-        <div class="mt-6 border-b border-gray-200">
-            <nav class="flex space-x-6">
-                <button id="aboutTab" class="px-4 py-2 text-blue-500 font-semibold">About</button>
-                <button id="jobsTab" class="px-4 py-2 text-gray-500 font-semibold hover:text-blue-500">Pekerjaan</button>
-            </nav>
-        </div>
-
-        <!-- Company Overview Section -->
-        <div id="aboutContent" class="mt-6 tab-content">
-            <h2 class="text-xl font-semibold mb-4">Overview perekrut</h2>
-            <div class="space-y-4">
-                <div class="flex">
-                    <span class="font-medium w-32">Email:</span>
-                    <span class="text-gray-700"><?= $perekrut[0]['perekrut']['email'] ?></span>
-                </div>
-                <div class="flex">
-                    <span class="font-medium w-32">Alamat:</span>
-                    <span class="text-gray-700"><?= $perekrut[0]['perekrut']['alamat'] ?>, <?= $perekrut[0]['kecamatan']['nama'] ?></span>
-                </div>
-                <div class="flex">
-                    <span class="font-medium w-32">Phone:</span>
-                    <span class="text-gray-700"><?= $perekrut[0]['perekrut']['phone'] ?></span>
-                </div>
+            <!-- Navigation Tabs -->
+            <div class="mt-6 border-b border-gray-200">
+                <nav class="flex space-x-6">
+                    <button id="aboutTab" class="px-4 py-2 text-blue-500 font-semibold">About</button>
+                    <button id="jobsTab" class="px-4 py-2 text-gray-500 font-semibold hover:text-blue-500">Pekerjaan</button>
+                </nav>
             </div>
-            <p class="mt-6 text-gray-700">
-                Being a part of Nestlé means you are part of something bigger; a community of people that comes together with a shared purpose and an organization committed to delivering good. Good food, Good life. Through the work we do and the products we create, we touch millions of lives every single day. This way we’re helping to shape a happier, healthier future for individuals and families, for communities and for the planet.
-            </p>
-        </div>
 
-        <!-- Jobs Section -->
-        <div id="jobsContent" class="tab-content hidden">
-            <h2 class="text-xl font-semibold my-4 ml-2">Pekerjaan</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                <?php foreach ($perekrut[0]['pekerjaan'] as $job) : ?>
-                    <div class="bg-white p-5 rounded shadow">
-                        <h3 class="text-lg font-bold mb-2"><?= $job['nama_pekerjaan'] ?></h3>
-                        <p class="text-gray-500 mb-2"><?= $job['alamat'] ?></p>
-                        <p class="text-gray-700 mb-4"><?= substr($job['deskripsi'], 0, 100) . '...' ?></p>
-                        <p class="text-gray-400 capitalize">Kompensasi : <?= number_format($job['kompensasi']) ?> / <?= $job['per'] ?></p>
-                        <?php $date = new DateTime($job['batas']);
-                        $formattedDate = $date->format('d F Y');
-                        ?>
-                        <p class="text-gray-400">Batas pendaftaran : <?= $formattedDate ?></p>
+            <!-- Company Overview Section -->
+            <div id="aboutContent" class="mt-6 tab-content">
+                <h2 class="text-xl font-semibold mb-4">Overview perekrut</h2>
+                <div class="space-y-4">
+                    <div class="flex">
+                        <span class="font-medium w-32">Email:</span>
+                        <span class="text-gray-700"><?= $perekrut[0]['perekrut']['email'] ?></span>
                     </div>
-                <?php endforeach; ?>
+                    <div class="flex">
+                        <span class="font-medium w-32">Alamat:</span>
+                        <span class="text-gray-700"><?= $perekrut[0]['perekrut']['alamat'] ?>, <?= $perekrut[0]['kecamatan']['nama'] ?></span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-medium w-32">Phone:</span>
+                        <span class="text-gray-700"><?= $perekrut[0]['perekrut']['phone'] ?></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Jobs Section -->
+            <div id="jobsContent" class="tab-content hidden">
+                <h2 class="text-xl font-semibold my-4 ml-2">Pekerjaan</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <?php foreach ($perekrut[0]['pekerjaan'] as $job) : ?>
+                        <div class="bg-white p-5 rounded shadow">
+                            <h3 class="text-lg font-bold mb-2"><?= $job['nama_pekerjaan'] ?></h3>
+                            <p class="text-gray-500 mb-2"><?= $job['alamat'] ?></p>
+                            <p class="text-gray-700 mb-4"><?= substr($job['deskripsi'], 0, 100) . '...' ?></p>
+                            <p class="text-gray-400 capitalize">Kompensasi : <?= number_format($job['kompensasi']) ?> / <?= $job['per'] ?></p>
+                            <?php $date = new DateTime($job['batas']);
+                            $formattedDate = $date->format('d F Y');
+                            ?>
+                            <p class="text-gray-400">Batas pendaftaran : <?= $formattedDate ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
-    </div>
+</body>
 </div>
 
 <div id="reviewModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
@@ -257,6 +268,4 @@
     cancelButton.addEventListener('click', () => {
         reviewModal.classList.add('hidden');
     });
-
-    
 </script>

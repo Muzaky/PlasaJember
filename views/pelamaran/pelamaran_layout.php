@@ -30,7 +30,7 @@ $body = ob_get_clean();
             success: function(response) {
                 if (response.success) {
                     resetForm();
-                    alert('Loker baru berhasil ditambahkan!');
+                    alert('Anda berhasil melamar pekerjaan!');
                 } else {
                     alert('Terjadi kesalahan: ' + response.message);
                 }

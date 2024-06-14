@@ -126,15 +126,7 @@ class M_Pekerjaan
         }
         return $data;
     }
-    static function deletePekerjaan($id)
-    {
-        global $conn;
-        $sql = 'DELETE FROM pekerjaan WHERE id = ?';
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-        $stmt->execute();
-    }
-
+  
     static function getPekerjaanByidpekerjaan2($id)
     {
         global $conn;
@@ -149,4 +141,13 @@ class M_Pekerjaan
         }
         return $data;
     }
+    static function deletePekerjaan($id)
+    {
+        global $conn;
+        $sql = 'DELETE FROM pekerjaan WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+    }
+
 }

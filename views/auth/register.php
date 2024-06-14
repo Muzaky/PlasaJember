@@ -141,7 +141,7 @@
                             <span>Masukkan Nama</span>
                         </div>
                         <div class="inputbox">
-                            <input type="text" class="h-[42px] rounded-[8px] px-2 bg-transparent  focus:ring-[#F8E8E0] focus:outline-none custom-select" required="required" name="email">
+                            <input type="email" class="h-[42px] rounded-[8px] px-2 bg-transparent  focus:ring-[#F8E8E0] focus:outline-none custom-select" required="required" name="email">
                             <span>Masukkan Email</span>
                         </div>
                         <div class="inputbox">

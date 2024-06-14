@@ -83,9 +83,11 @@ class C_Pelamaran
                 'id' => $_POST['id'],
                 'alasan' => $_POST['alasan'],
                 'status' => $_POST['status'],
+                'catatan' => $_POST['status'],
             ];
 
             if (M_Pelamaran::updatePelamaran2($data)) {
+                $_SESSION['status'] = 'Berhasil memperbarui data';
                 header('Location: ' . BASEURL . 'homepage');
             } else {
                 echo json_encode(['success' => false, 'message' => 'Gagal menyimpan data']);
@@ -118,14 +120,24 @@ class C_Pelamaran
             exit;
         } else {
             $pekerja = M_Users::getUsersbyId($_SESSION['user']['id']);
-            $pelamaran = M_Pelamaran::getPelaramanbyId($pekerja['id']);
+            $pelamaran = M_Pelamaran::getpelamaranbyid2($pekerja['id']);
+            $alldata = [];
+            foreach ($pelamaran as $pelamarans) {
+                $pekerjaandetails = M_Pekerjaan::getPekerjaanByidpekerjaan($pelamarans['id_pekerjaan']);
+                $alldata[] = [
+                    'pelamaran' => $pelamarans,
+                    'pekerjaandetails' => $pekerjaandetails
+                ];
+            }
+            $_SESSION['pelamaran'] = $alldata;
 
             view('pelamaran/pelamaran_layout', [
                 'url' => 'historypelamaran',
-                'pelamaran' => $pelamaran,
+                'pelamaran' => $alldata,
                 'user' => $_SESSION['user'],
-                'pekerja' => $pekerja
+                'pekerja' => $pekerja,
             ]);
+
         }
     }
 

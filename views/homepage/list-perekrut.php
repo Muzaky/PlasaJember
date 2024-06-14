@@ -72,6 +72,7 @@
 <?php $perekrutData = $perekrut[0]; ?>
 
 <header id="footer-main" class="w-full py-4 bg-[#CB6062] flex flex-row items-center">
+
     <div id="logo-container" class="flex pl-8">
         <img src="../src/assets/Logo.png" alt="test" class="w-[112px]">
     </div>
@@ -79,10 +80,9 @@
         <?php if ($user['roles_id'] == 2) {
             $list_perekrut = urlpath('homepage/list-perekrut'); // Correct path
             $homepage = urlpath('homepage');
-            $historypelamaran = urlpath('pelamaran/historypelamaran');
+
             echo '<a href="' . $homepage . '" class="">Cari Lowongan</a>';
             echo '<a href="' . $list_perekrut . '" class="">List Perekrut</a>';
-            echo '<a href="' . $historypelamaran . '" class="">History Pelamaran</a>';
         } ?>
 
 
@@ -133,7 +133,9 @@
             </div>
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                    <?php if ($user['roles_id'] == 2) { ?>
+                        <a href="<?= urlpath('pelamaran/historypelamaran') ?>" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">History</a>
+                    <?php } ?>
                 </li>
 
             </ul>
@@ -144,6 +146,29 @@
 
     </div>
 </header>
+<?php if (isset($_SESSION['status'])) {
+?>
+    <div class="flex w-screen items-center justify-center">
+        <div id="alert" class="flex absolute shadow-xl items-center top-0 right-24 justify-center p-4 mt-24 bg-slate-400 text-white rounded-lg z-50" role="alert">
+            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ms-3 text-sm font-medium">
+                <?php echo $_SESSION['status']; ?>
+            </div>
+            <button type="button" class="ml-4 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+<?php
+    unset($_SESSION['status']);
+}
+?>
 
 <body class="font-[montserrat]">
     <div id="main-container" class="flex flex-col items-center justify-center">
@@ -171,17 +196,28 @@
         </div>
 
         <!-- Swiper Container -->
-        <div class="relative w-[1280px]">
+        <div class="relative w-[1280px] overflow-hidden">
             <div class="swiper-container mySwiper mt-4">
-                <div class="swiper-wrapper" id="tablezz" >
+                <div class="swiper-wrapper" id="tablezz">
                     <?php foreach ($perekrut as $perekruts) { ?>
-                        <div class="swiper-slide h-[250px] relative rounded-xl border border-[#185141] p-4 bg-white shadow-lg" >
+                        <div class="swiper-slide h-[250px] relative rounded-xl border border-[#185141] p-4 bg-white shadow-lg">
                             <div class="flex flex-col items-start justify-between">
 
                                 <div>
                                     <h1 class="text-xl font-semibold namaperekrut"><?= $perekruts['perekrutdetails']['nama'] ?></h1>
                                     <p><?= $perekruts['kecamatan']['nama'] ?></p>
                                     <div class="flex items-center text-gray-600">
+                                        <span><?php
+                                                $avgrating = 0;
+                                                if (count($perekruts['rating']) > 0) {
+                                                    foreach ($perekruts['rating'] as $rating) {
+                                                        $avgrating += $rating['rating'];
+                                                    }
+                                                    echo round($avgrating / count($perekruts['rating']), 1);
+                                                } else {
+                                                    echo 0;
+                                                }
+                                                ?></span>
                                         <span class="star">⭐</span>
                                         <span> - <?= $perekruts['countrating'] ?> Reviews</span>
                                     </div>
@@ -190,7 +226,7 @@
                             </div>
                             <div class="mt-4 text-gray-700">
 
-                                <p><?= $perekruts['countpekerjaan'] ?> Jobs</p>
+                                <p><?= $perekruts['countpekerjaan'] ?> Pekerjaan</p>
                             </div>
                             <a href="<?= urlpath('homepage/detail-perekrut?id=' . $perekruts['perekrut']['id']) ?>" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded-lg">Detail Perekrut</a>
                         </div>
@@ -199,7 +235,7 @@
             </div>
 
             <!-- Add navigation buttons -->
-            <div class="swiper-button-next absolute top-1/2 right-0 transform -translate-y-1/2"></div>
+            <div class="swiper-button-next absolute top-1/2 right-0 transform -translate-y-1/2 "></div>
             <div class="swiper-button-prev absolute top-1/2 left-0 transform -translate-y-1/2"></div>
         </div>
     </div>
@@ -207,7 +243,7 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper('.mySwiper', {
-            slidesPerView: 3,
+            slidesPerView: '3', // Use 'auto' to automatically adjust the slides per view
             spaceBetween: 30,
             pagination: {
                 el: '.swiper-pagination',
